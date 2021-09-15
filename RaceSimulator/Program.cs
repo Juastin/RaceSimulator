@@ -6,7 +6,7 @@ namespace RaceSimulator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("RaceSimulator");
+            Console.WriteLine("RaceSimulator!");
         }
     }
 }
