@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaceSimulator", "RaceSimulator\RaceSimulator.csproj", "{88A3B847-CD88-4754-90C6-D13FA9482216}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{F2E66E6C-3309-421D-BD24-8073B0D1354B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controller", "Controller\Controller.csproj", "{D0CF2D3D-CDE9-4972-B0D9-FE12E3D12CA4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88A3B847-CD88-4754-90C6-D13FA9482216}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88A3B847-CD88-4754-90C6-D13FA9482216}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88A3B847-CD88-4754-90C6-D13FA9482216}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88A3B847-CD88-4754-90C6-D13FA9482216}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2E66E6C-3309-421D-BD24-8073B0D1354B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2E66E6C-3309-421D-BD24-8073B0D1354B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2E66E6C-3309-421D-BD24-8073B0D1354B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2E66E6C-3309-421D-BD24-8073B0D1354B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0CF2D3D-CDE9-4972-B0D9-FE12E3D12CA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0CF2D3D-CDE9-4972-B0D9-FE12E3D12CA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0CF2D3D-CDE9-4972-B0D9-FE12E3D12CA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0CF2D3D-CDE9-4972-B0D9-FE12E3D12CA4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E57369CB-0FAE-4F07-8F0D-34413937061D}
+	EndGlobalSection
+EndGlobal
