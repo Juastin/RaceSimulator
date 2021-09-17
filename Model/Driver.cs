@@ -11,9 +11,12 @@ namespace Model
         public IEquipment Equipment { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public TeamColors TeamColors { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public Driver()
+        public Driver(string name, int points, IEquipment equipment, TeamColors teamColors)
         {
-
+            name = Name;
+            points = Points;
+            equipment = Equipment;
+            teamColors = TeamColors;
         }
     }
 }

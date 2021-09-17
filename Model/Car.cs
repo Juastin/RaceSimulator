@@ -11,9 +11,12 @@ namespace Model
         public int Speed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public bool IsBroken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public Car()
+        public Car(int quality, int performance, int speed, bool isBroken)
         {
-
+            quality = Quality;
+            performance = Performance;
+            speed = Speed;
+            isBroken = IsBroken;
         }
     }
 }
