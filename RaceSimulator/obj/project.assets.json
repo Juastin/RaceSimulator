@@ -848,6 +848,10 @@
       "Controller/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "ControllerTest": "1.0.0",
+          "Model": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/Controller.dll": {}
         },

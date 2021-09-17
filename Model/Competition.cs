@@ -13,5 +13,10 @@ namespace Model
         {
             return Tracks.Dequeue();
         }
+        public Competition(List<IParticipant> participants, Queue<Track> tracks)
+        {
+            participants = Participants;
+            tracks = Tracks;
+        }
     }
 }

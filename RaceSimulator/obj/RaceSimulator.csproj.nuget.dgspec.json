@@ -97,7 +97,14 @@
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\juspa\\Documents\\projects\\c#\\RaceSimulator\\ControllerTest\\ControllerTest.csproj": {
+                "projectPath": "C:\\Users\\juspa\\Documents\\projects\\c#\\RaceSimulator\\ControllerTest\\ControllerTest.csproj"
+              },
+              "C:\\Users\\juspa\\Documents\\projects\\c#\\RaceSimulator\\Model\\Model.csproj": {
+                "projectPath": "C:\\Users\\juspa\\Documents\\projects\\c#\\RaceSimulator\\Model\\Model.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
