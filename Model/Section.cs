@@ -13,7 +13,7 @@ public enum SectionTypes
 
 namespace Model
 {
-    class Section
+    public class Section
     {
         public SectionTypes SectionTypes { get; set; }
 

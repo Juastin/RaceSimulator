@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Model
 {
-    class Driver : IParticipant
+    public class Driver : IParticipant
     {
         public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int Points { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -18,5 +18,6 @@ namespace Model
             equipment = Equipment;
             teamColors = TeamColors;
         }
+        // public Driver() {   }
     }
 }
