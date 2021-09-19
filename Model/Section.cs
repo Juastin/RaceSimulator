@@ -19,7 +19,7 @@ namespace Model
 
         public Section(SectionTypes sectionTypes)
         {
-            sectionTypes = SectionTypes;
+            SectionTypes = sectionTypes;
         }
     }
 }

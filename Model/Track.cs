@@ -10,7 +10,7 @@ namespace Model
         public LinkedList<Section> Section { get; set; }
         public Track(string name, SectionTypes[] sections)
         {
-            name = Name;
+            Name = name;
             Section = new LinkedList<Section>();
             foreach (SectionTypes type in sections)
             {

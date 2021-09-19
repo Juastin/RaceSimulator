@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Model
@@ -11,13 +12,21 @@ namespace Model
 
         public Track NextTrack()
         {
+            if (Tracks.Count == 0)
+            {
+                return null;
+            }
             return Tracks.Dequeue();
         }
-        public Competition() { }
+        public Competition() 
+        {
+            Participants = new List<IParticipant>();
+            Tracks = new Queue<Track>();
+        }
         public Competition(List<IParticipant> participants, Queue<Track> tracks)
         {
-            participants = Participants;
-            tracks = Tracks;
+            Participants = participants;
+            Tracks = tracks;
         }
     }
 }
