@@ -30,10 +30,9 @@ namespace Controller
         }
         public static void NextRace()
         {
-            if (Competition.Tracks.Count != 0)
-            {
-                CurrentRace = new Race(Competition.NextTrack(), Competition.Participants);
-            }
+            Track NextTrack = Competition.NextTrack();
+            if (NextTrack != null)
+                CurrentRace = new Race(NextTrack, Competition.Participants);
         }
     }
 }

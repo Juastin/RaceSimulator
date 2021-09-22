@@ -12,6 +12,10 @@ namespace Model
         {
             Name = name;
             Section = new LinkedList<Section>();
+            AddSections(sections);
+        }
+        public void AddSections(SectionTypes[] sections)
+        {
             foreach (SectionTypes type in sections)
             {
                 Section.AddLast(new Section(type));
