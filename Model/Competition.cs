@@ -9,15 +9,6 @@ namespace Model
     {
         public List<IParticipant> Participants { get; set; }
         public Queue<Track> Tracks { get; set; }
-
-        public Track NextTrack()
-        {
-            if (Tracks.Count == 0)
-            {
-                return null;
-            }
-            return Tracks.Dequeue();
-        }
         public Competition() 
         {
             Participants = new List<IParticipant>();
@@ -27,6 +18,14 @@ namespace Model
         {
             Participants = participants;
             Tracks = tracks;
+        }
+        public Track NextTrack()
+        {
+            if(Tracks.TryDequeue(out Track Track))
+            {
+                return Track;
+            }
+            return null;
         }
     }
 }

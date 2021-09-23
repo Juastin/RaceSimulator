@@ -1,8 +1,5 @@
-﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Model;
+﻿using Model;
+using NUnit.Framework;
 
 namespace ControllerTest
 {
@@ -36,7 +33,7 @@ namespace ControllerTest
         public void NextTrack_OneInQueue_RemoveTrackFromQueue()
         {
             Track track = new Track("TestTrack", new SectionTypes[] { SectionTypes.StartGrid, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.Finish });
-            
+
             _competition.Tracks.Enqueue(track);
             _ = _competition.NextTrack();
             Track result = _competition.NextTrack();
@@ -45,9 +42,9 @@ namespace ControllerTest
         [Test]
         public void NextTrack_TwoInQueue_ReturnNextTrack()
         {
-            Track track1 = new Track("TestTrack1", new SectionTypes[] { SectionTypes.StartGrid,SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.Finish });
-            Track track2 = new Track("TestTrack2", new SectionTypes[] {   SectionTypes.StartGrid, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.Finish });
-            
+            Track track1 = new Track("TestTrack1", new SectionTypes[] { SectionTypes.StartGrid, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.Finish });
+            Track track2 = new Track("TestTrack2", new SectionTypes[] { SectionTypes.StartGrid, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.Finish });
+
             _competition.Tracks.Enqueue(track1);
             _competition.Tracks.Enqueue(track2);
 
