@@ -88,11 +88,19 @@ namespace RaceSimulator
 
         public static void DrawTrack(Track track)   
         {
-            
+            Console.SetCursorPosition(X, Y);
+            foreach (Section section in track.Section) { 
+                DefineSection(section);
+                for (int i = 0; i < 4; i++)
+                {
+                    Console.Write(CurrentSection[i]);
+                    Y++;
+                    Console.SetCursorPosition(X, Y);
+                }
+            }
         }
         public static void DefineSection(Section section)
         {
-
             switch (section.SectionTypes)
             {
                 case SectionTypes.StartGrid:

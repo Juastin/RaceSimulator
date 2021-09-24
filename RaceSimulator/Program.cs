@@ -8,7 +8,13 @@ namespace RaceSimulator
         static void Main(string[] args)
         {
             Data.Initialise();
+            Visuals.Initialise();
+            Data.NextRace();
             Visuals.DrawTrack(Data.CurrentRace.Track);
+            
+            
+            
+            /*
             Data.NextRace();
 
             Console.WriteLine($"Eerste race: {Data.CurrentRace.Track.Name}");
@@ -21,8 +27,8 @@ namespace RaceSimulator
 
             Data.NextRace();
             Console.WriteLine($"Fourth race?: {Data.CurrentRace.Track.Name}");
+            */
 
-            
         }
     }
 }
