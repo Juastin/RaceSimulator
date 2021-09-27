@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
-using Model;
 
 namespace RaceSimulator
 {
@@ -42,8 +41,8 @@ namespace RaceSimulator
         private static string[] _startGridHorizontal =
         {
             "ooooo",
-            "|   |",
-            "  |  ",
+            "   | ",
+            " |   ",
             "ooooo"
 
         };
@@ -94,10 +93,11 @@ namespace RaceSimulator
 
         #endregion
 
-        public static void DrawTrack(Track track)   
+        public static void DrawTrack(Track track)
         {
             DefineGraphics(track.Section);
-            foreach (Section section in track.Section) {
+            foreach (Section section in track.Section)
+            {
                 for (int i = 0; i < section.Visuals.Length; i++)
                 {
                     Console.SetCursorPosition(section.X * sectionSize[0] + negativeX, section.Y * sectionSize[1] + negativeY + i);
@@ -169,7 +169,7 @@ namespace RaceSimulator
             if (compass == 4 || compass == -1)
                 compass = 0;
             if (compass == 0)
-               lastY--;
+                lastY--;
             if (compass == 1)
                 lastX++;
             if (compass == 2)
@@ -182,6 +182,6 @@ namespace RaceSimulator
             if (lastY * sectionSize[1] < _offsetY)
                 negativeY = lastY * sectionSize[1];
         }
-        
+
     }
 }

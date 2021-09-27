@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Model;
 
 namespace Controller
 {
@@ -18,6 +17,7 @@ namespace Controller
         {
             Track = track;
             Participants = participants;
+            _positions = new Dictionary<Section, SectionData>();
             _random = new Random(DateTime.Now.Millisecond);
             PlaceParticipants(Track, Participants);
         }
