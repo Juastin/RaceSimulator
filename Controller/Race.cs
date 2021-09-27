@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Model;
 
@@ -18,6 +19,7 @@ namespace Controller
             Track = track;
             Participants = participants;
             _random = new Random(DateTime.Now.Millisecond);
+            PlaceParticipants(Track, Participants);
         }
         public SectionData GetSectionData(Section Section)
         {
@@ -41,9 +43,21 @@ namespace Controller
         {
             LinkedList<Section> startGrids = track.GetSectionDataList(track.Section);
 
-            if (startGrids.Count > participants.Count)
+            if (startGrids.Count >= participants.Count)
             {
-                // Add participant
+                for (int i = 0; i < participants.Count; i++)
+                {
+                    SectionData SectionData = GetSectionData(startGrids.ElementAt(i));
+
+                    if (i % 2 == 0)
+                        SectionData.Left = participants[i];
+                    else
+                        SectionData.Right = participants[i];
+                }
+            }
+            else
+            {
+                throw new Exception("There are no startgrids left! Make some more for your track.");
             }
         }
     }
