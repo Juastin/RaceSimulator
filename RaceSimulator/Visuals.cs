@@ -8,21 +8,23 @@ namespace RaceSimulator
 {
     public static class Visuals
     {
-        public static int X;
-        public static int Y;
         private static int lastX;
         private static int lastY;
-        public static bool IsHorizontal;
-        public static bool IsBackwards;
         public static string[] CurrentSection;
         private static int compass;
+        private static int[] sectionSize;
+        private static int negativeX;
+        private static int negativeY;
+        private static int _offsetX;
+        private static int _offsetY;
         public static void Initialise()
         {
-            X = 0;
-            Y = 0;
             compass = 1;
-            lastX = 10;
-            lastY = 0;
+            lastX = 0;
+            lastY = 1;
+            sectionSize = new int[] { 5, 4 };
+            negativeX = 0;
+            negativeY = 0;
         }
         #region graphics
         private static string[] _finishHorizontal = {
@@ -89,23 +91,36 @@ namespace RaceSimulator
              "o    ",
              "o   o"
          };
+
         #endregion
 
         public static void DrawTrack(Track track)   
         {
-            foreach (Section section in track.Section) { 
-                DefineSection(section);
+            DefineGraphics(track.Section);
+            foreach (Section section in track.Section) {
                 for (int i = 0; i < section.Visuals.Length; i++)
                 {
-                    Console.SetCursorPosition(section.X * 5, section.Y * 4 + i);
+                    Console.SetCursorPosition(section.X * sectionSize[0] + negativeX, section.Y * sectionSize[1] + negativeY + i);
                     Console.Write(section.Visuals[i]);
                     Thread.Sleep(25);
                 }
             }
         }
+        private static void DefineGraphics(LinkedList<Section> sections)
+        {
+            foreach (Section section in sections)
+            {
+                DefineSection(section);
+            }
+            DefineOffset();
+        }
+        private static void DefineOffset()
+        {
+            negativeX = Math.Abs(negativeX);
+            negativeY = Math.Abs(negativeY);
+        }
         public static void DefineSection(Section section)
         {
-            
             section.X = lastX;
             section.Y = lastY;
             switch (section.SectionTypes)
@@ -136,7 +151,6 @@ namespace RaceSimulator
                         section.Visuals = _cornerNE;
                     if (compass == 3)
                         section.Visuals = _cornerSE;
-
                     compass--;
                     break;
                 case SectionTypes.Straight:
@@ -152,6 +166,8 @@ namespace RaceSimulator
                         section.Visuals = _finishHorizontal;
                     break;
             }
+            if (compass == 4 || compass == -1)
+                compass = 0;
             if (compass == 0)
                lastY--;
             if (compass == 1)
@@ -160,9 +176,12 @@ namespace RaceSimulator
                 lastY++;
             if (compass == 3)
                 lastX--;
-            if (compass == 4 || compass == -1)
-                compass = 0;
 
+            if (lastX * sectionSize[0] < negativeX)
+                negativeX = lastX * sectionSize[0];
+            if (lastY * sectionSize[1] < _offsetY)
+                negativeY = lastY * sectionSize[1];
         }
+        
     }
 }
