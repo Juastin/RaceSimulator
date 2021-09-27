@@ -22,5 +22,15 @@ namespace Model
             }
             return Section;
         }
+        public LinkedList<Section> GetSectionDataList(LinkedList<Section> sections)
+        {
+            LinkedList<Section> listSections = new LinkedList<Section>();
+            foreach (Section section in sections)
+            {
+                if (section.SectionTypes == SectionTypes.StartGrid)
+                    listSections.AddFirst(section);
+            }
+            return listSections;
+        }
     }
 }

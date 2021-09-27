@@ -37,5 +37,14 @@ namespace Controller
                 Participant.Equipment.Performance = _random.Next(10);
             }
         }
+        public void PlaceParticipants(Track track, List<IParticipant> participants)
+        {
+            LinkedList<Section> startGrids = track.GetSectionDataList(track.Section);
+
+            if (startGrids.Count > participants.Count)
+            {
+                // Add participant
+            }
+        }
     }
 }
