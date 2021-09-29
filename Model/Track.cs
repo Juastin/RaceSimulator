@@ -24,13 +24,13 @@ namespace Model
         }
         public LinkedList<Section> GetSectionDataList(LinkedList<Section> sections)
         {
-            LinkedList<Section> listSections = new LinkedList<Section>();
+            LinkedList<Section> SectionDataList = new LinkedList<Section>();
             foreach (Section section in sections)
             {
                 if (section.SectionTypes == SectionTypes.StartGrid)
-                    listSections.AddFirst(section);
+                    SectionDataList.AddFirst(section);
             }
-            return listSections;
+            return SectionDataList;
         }
     }
 }

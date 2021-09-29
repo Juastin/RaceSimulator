@@ -16,8 +16,7 @@ namespace RaceSimulator
         private static int[] sectionSize;
         private static int negativeX;
         private static int negativeY;
-        private static int _offsetX;
-        private static int _offsetY;
+        private static bool IsDefined;
         public static void Initialise(Race currentRace)
         {
             compass = 1;
@@ -45,15 +44,15 @@ namespace RaceSimulator
         {
             "ooooo",
             "   \\ ",
-            " /   ",
+            "   / ",
             "ooooo"
 
         };
         private static string[] _startGridVertical =
         {
             "o   o",
-            "o-- o",
-            "o --o",
+            "o---o",
+            "o   o",
             "o   o"
 
         };
@@ -98,7 +97,9 @@ namespace RaceSimulator
 
         public static void DrawTrack()
         {
-            DefineGraphics(CurrentRace.Track.Sections);
+            if (!IsDefined) 
+                DefineGraphics(CurrentRace.Track.Sections);
+
             foreach (Section section in CurrentRace.Track.Sections)
             {
                 string[] Visuals = DrawParticipantsOnTrack(section);
@@ -117,6 +118,7 @@ namespace RaceSimulator
                 DefineSection(section);
             }
             DefineOffset();
+            IsDefined = true;
         }
         public static string[] DrawParticipantsOnTrack(Section section)
         {
@@ -210,7 +212,7 @@ namespace RaceSimulator
 
             if (lastX * sectionSize[0] < negativeX)
                 negativeX = lastX * sectionSize[0];
-            if (lastY * sectionSize[1] < _offsetY)
+            if (lastY * sectionSize[1] < negativeY)
                 negativeY = lastY * sectionSize[1];
         }
 

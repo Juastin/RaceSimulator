@@ -14,6 +14,7 @@ namespace RaceSimulator
                 Console.WriteLine(Data.CurrentRace.Track.Name);
                 Visuals.DrawTrack();
                 Thread.Sleep(100);
+            for (; ; ) { }
         }
     }
 }

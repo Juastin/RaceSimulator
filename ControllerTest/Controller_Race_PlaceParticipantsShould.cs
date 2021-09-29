@@ -2,8 +2,9 @@
 using Model;
 using Controller;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ControllerTest
 {
@@ -26,8 +27,6 @@ namespace ControllerTest
             CurrentRace = new Race(NextTrack, Competition.Participants);
         }
         [Test]
-        [ExpectedException(typeof(Exception),
-        "There are no startgrids left! Make some more for your track.")]
         public void PlaceParticipants_NotEnoughStartGrids_ReturnException()
         {
 
