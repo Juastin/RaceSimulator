@@ -1,6 +1,8 @@
-﻿using Model;
+﻿using Controller;
+using Model;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 
 namespace RaceSimulator
@@ -9,14 +11,14 @@ namespace RaceSimulator
     {
         private static int lastX;
         private static int lastY;
-        public static string[] CurrentSection;
+        public static Race CurrentRace;
         private static int compass;
         private static int[] sectionSize;
         private static int negativeX;
         private static int negativeY;
         private static int _offsetX;
         private static int _offsetY;
-        public static void Initialise()
+        public static void Initialise(Race currentRace)
         {
             compass = 1;
             lastX = 0;
@@ -24,6 +26,7 @@ namespace RaceSimulator
             sectionSize = new int[] { 5, 4 };
             negativeX = 0;
             negativeY = 0;
+            CurrentRace = currentRace;
         }
         #region graphics
         private static string[] _finishHorizontal = {
@@ -49,8 +52,8 @@ namespace RaceSimulator
         private static string[] _startGridVertical =
         {
             "o   o",
-            "o---o",
-            "o   o",
+            "o-- o",
+            "o --o",
             "o   o"
 
         };
@@ -93,15 +96,16 @@ namespace RaceSimulator
 
         #endregion
 
-        public static void DrawTrack(Track track)
+        public static void DrawTrack()
         {
-            DefineGraphics(track.Section);
-            foreach (Section section in track.Section)
+            DefineGraphics(CurrentRace.Track.Sections);
+            foreach (Section section in CurrentRace.Track.Sections)
             {
+                string[] Visuals = DrawParticipantsOnTrack(section);
                 for (int i = 0; i < section.Visuals.Length; i++)
                 {
                     Console.SetCursorPosition(section.X * sectionSize[0] + negativeX, section.Y * sectionSize[1] + negativeY + i);
-                    Console.Write(section.Visuals[i]);
+                    Console.Write(Visuals[i]);
                     Thread.Sleep(25);
                 }
             }
@@ -113,6 +117,35 @@ namespace RaceSimulator
                 DefineSection(section);
             }
             DefineOffset();
+        }
+        public static string[] DrawParticipantsOnTrack(Section section)
+        {
+            SectionData sectionData = CurrentRace.GetSectionData(section);
+            string[] Visuals = (string[])section.Visuals.Clone();
+            if (section.SectionTypes == SectionTypes.StartGrid)
+            {
+                for (int y = 0; y < CurrentRace.Participants.Count; y++)
+                {
+                    for (int i = 0; i < section.Visuals.Length; i++)
+                    {
+                        
+                        if (section.Visuals[i].Contains('|'))
+                        {
+                            if (i % 2 == 0)
+                                if (sectionData.Left != null)
+                                {
+                                    Visuals[i] = section.Visuals[i].Replace('|', sectionData.Left.Name[0]);
+                                }
+                                if (sectionData.Right != null)
+                                {
+                                    Visuals[i] = section.Visuals[i].Replace('|', sectionData.Right.Name[0]);
+                                }
+                            
+                        }
+                    }
+                }
+            }
+            return Visuals;
         }
         private static void DefineOffset()
         {

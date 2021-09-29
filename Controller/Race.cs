@@ -41,7 +41,7 @@ namespace Controller
         }
         public void PlaceParticipants(Track track, List<IParticipant> participants)
         {
-            LinkedList<Section> startGrids = track.GetSectionDataList(track.Section);
+            LinkedList<Section> startGrids = track.GetSectionDataList(track.Sections);
 
             if (startGrids.Count >= participants.Count)
             {
