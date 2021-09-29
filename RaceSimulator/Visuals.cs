@@ -131,7 +131,6 @@ namespace RaceSimulator
                         
                         if (section.Visuals[i].Contains('|'))
                         {
-                            if (i % 2 == 0)
                                 if (sectionData.Left != null)
                                 {
                                     Visuals[i] = section.Visuals[i].Replace('|', sectionData.Left.Name[0]);
@@ -140,7 +139,6 @@ namespace RaceSimulator
                                 {
                                     Visuals[i] = section.Visuals[i].Replace('|', sectionData.Right.Name[0]);
                                 }
-                            
                         }
                     }
                 }
