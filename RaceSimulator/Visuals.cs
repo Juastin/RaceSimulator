@@ -44,8 +44,8 @@ namespace RaceSimulator
         private static string[] _startGridHorizontal =
         {
             "ooooo",
-            "   | ",
-            " |   ",
+            "   \\ ",
+            " /   ",
             "ooooo"
 
         };
@@ -129,15 +129,15 @@ namespace RaceSimulator
                     for (int i = 0; i < section.Visuals.Length; i++)
                     {
                         
-                        if (section.Visuals[i].Contains('|'))
+                        if (section.Visuals[i].Contains('\\') || section.Visuals[i].Contains('/'))
                         {
                                 if (sectionData.Left != null)
                                 {
-                                    Visuals[i] = section.Visuals[i].Replace('|', sectionData.Left.Name[0]);
+                                    Visuals[i] = section.Visuals[i].Replace('\\', sectionData.Left.Name[0]);
                                 }
                                 if (sectionData.Right != null)
                                 {
-                                    Visuals[i] = section.Visuals[i].Replace('|', sectionData.Right.Name[0]);
+                                    Visuals[i] = section.Visuals[i].Replace('/', sectionData.Right.Name[0]);
                                 }
                         }
                     }
