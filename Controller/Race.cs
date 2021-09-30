@@ -19,7 +19,7 @@ namespace Controller
             Participants = participants;
             _positions = new Dictionary<Section, SectionData>();
             _random = new Random(DateTime.Now.Millisecond);
-            PlaceParticipants(Track, Participants);
+            PlaceParticipantsOnStartGrid(Track, Participants);
         }
         public SectionData GetSectionData(Section Section)
         {
@@ -39,33 +39,22 @@ namespace Controller
                 Participant.Equipment.Performance = _random.Next(10);
             }
         }
-        public void PlaceParticipants(Track track, List<IParticipant> participants)
+        public void PlaceParticipantsOnStartGrid(Track track, List<IParticipant> participants)
         {
             LinkedList<Section> startGrids = track.GetStartGridSectionData(track.Sections);
-
-            if (startGrids.Count * 2 >= participants.Count)
+            for (int i = 0; i < startGrids.Count; i++)
             {
-                for (int i = 0; i < participants.Count; i++)
+                SectionData SectionData = GetSectionData(startGrids.ElementAt(i));
+                for (int y = 2 * i; y <= 2 * i + 1; y++)
                 {
-                    for (int y = 0; y < participants.Count; y++)
+                    if (y < participants.Count)
                     {
-
-                    }
-                    SectionData SectionData = GetSectionData(startGrids.ElementAt(i));
-
-                    if (SectionData.Left == null)
-                    {
-                        SectionData.Left = participants[i];
-                    }
-                    if (SectionData.Right == null)
-                    {
-                        SectionData.Right = participants[i];
+                        if (y % 2 == 0)
+                            SectionData.Left = Participants[y];
+                        else
+                            SectionData.Right = Participants[y];
                     }
                 }
-            }
-            else
-            {
-                throw new Exception("There are no startgrids left! Make some more for your track.");
             }
         }
     }

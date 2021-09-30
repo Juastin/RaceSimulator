@@ -30,66 +30,66 @@ namespace RaceSimulator
         #region graphics
         private static string[] _finishHorizontal = {
             "ooooo",
-            "    #",
-            "    #",
+            "   1#",
+            "  2 #",
             "ooooo"
         };
         private static string[] _finishVertical = {
             "o###o",
-            "o   o",
-            "o   o",
+            "o1  o",
+            "o  2o",
             "o   o"
         };
         private static string[] _startGridHorizontal =
         {
             "ooooo",
-            "   \\ ",
-            "   / ",
+            "   1 ",
+            "  2  ",
             "ooooo"
 
         };
         private static string[] _startGridVertical =
         {
             "o   o",
-            "o---o",
-            "o   o",
+            "o1  o",
+            "o  2o",
             "o   o"
 
         };
         private static string[] _straightHorizontal = {
             "ooooo",
-            "     ",
-            "     ",
+            "   1 ",
+            "   2 ",
             "ooooo"
         };
         private static string[] _straightVertical = {
             "o   o",
-            "o   o",
+            "o1 2o",
             "o   o",
             "o   o"
         };
         private static string[] _cornerSW = {
             "oooo",
             "   oo",
-            "    o",
+            "1 2 o",
             "o   o"
         };
         private static string[] _cornerNW = {
             "o   o",
-            "    o",
+            "1 2 o",
             "   oo",
             "oooo "
         };
         private static string[] _cornerNE = {
             "o   o",
-            "o    ",
+            "o 1 2",
             "oo   ",
             " oooo"
         };
         private static string[] _cornerSE = {
              " oooo",
              "oo   ",
-             "o    ",
+             "o 1 2",
              "o   o"
          };
 
@@ -102,7 +102,7 @@ namespace RaceSimulator
 
             foreach (Section section in CurrentRace.Track.Sections)
             {
-                string[] Visuals = DrawParticipantsOnTrack(section);
+                string[] Visuals = DrawParticipantsOnTrack(section, CurrentRace.Participants);
                 for (int i = 0; i < section.Visuals.Length; i++)
                 {
                     Console.SetCursorPosition(section.X * sectionSize[0] + negativeX, section.Y * sectionSize[1] + negativeY + i);
@@ -121,30 +121,25 @@ namespace RaceSimulator
             IsDefined = true;
         }
         // Fix to also draw on stuff which is not the startgrid.
-        public static string[] DrawParticipantsOnTrack(Section section)
+        public static string[] DrawParticipantsOnTrack(Section section, List<IParticipant> participants)
         {
-            SectionData sectionData = CurrentRace.GetSectionData(section);
             string[] Visuals = (string[])section.Visuals.Clone();
-            if (section.SectionTypes == SectionTypes.StartGrid)
+
+            for (int i = 0; i < section.Visuals.Length; i++)
             {
-                for (int y = 0; y < CurrentRace.Participants.Count; y++)
+                SectionData SectionData = CurrentRace.GetSectionData(section);
+                for (int y = 2 * i; y <= 2 * i + 1; y++)
                 {
-                    for (int i = 0; i < section.Visuals.Length; i++)
                     {
-                        
-                        if (section.Visuals[i].Contains('\\') || section.Visuals[i].Contains('/'))
-                        {
-                                if (sectionData.Left != null)
-                                {
-                                    Visuals[i] = section.Visuals[i].Replace('\\', sectionData.Left.Name[0]);
-                                }
-                                if (sectionData.Right != null)
-                                {
-                                    Visuals[i] = section.Visuals[i].Replace('/', sectionData.Right.Name[0]);
-                                }
-                        }
+                        if (y % 2 == 0)
+                            if(SectionData.Left != null)
+                            Visuals[i] = section.Visuals[i].Replace('1', SectionData.Left.Name[0]);
+                        else
+                            if(SectionData.Right != null)
+                            Visuals[i] = section.Visuals[i].Replace('2', SectionData.Right.Name[0]);
                     }
                 }
+                
             }
             return Visuals;
         }
