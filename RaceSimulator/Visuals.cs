@@ -120,6 +120,7 @@ namespace RaceSimulator
             DefineOffset();
             IsDefined = true;
         }
+        // Fix to also draw on stuff which is not the startgrid.
         public static string[] DrawParticipantsOnTrack(Section section)
         {
             SectionData sectionData = CurrentRace.GetSectionData(section);

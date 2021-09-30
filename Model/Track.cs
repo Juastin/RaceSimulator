@@ -13,6 +13,8 @@ namespace Model
             Name = name;
             Sections = AddSections(sections);
         }
+
+        // Fix this
         public LinkedList<Section> AddSections(SectionTypes[] sections)
         {
             LinkedList<Section> Section = new LinkedList<Section>();
@@ -22,7 +24,10 @@ namespace Model
             }
             return Section;
         }
-        public LinkedList<Section> GetSectionDataList(LinkedList<Section> sections)
+
+
+        // Fix this
+        public LinkedList<Section> GetStartGridSectionData(LinkedList<Section> sections)
         {
             LinkedList<Section> SectionDataList = new LinkedList<Section>();
             foreach (Section section in sections)

@@ -41,18 +41,26 @@ namespace Controller
         }
         public void PlaceParticipants(Track track, List<IParticipant> participants)
         {
-            LinkedList<Section> startGrids = track.GetSectionDataList(track.Sections);
+            LinkedList<Section> startGrids = track.GetStartGridSectionData(track.Sections);
 
-            if (startGrids.Count >= participants.Count)
+            if (startGrids.Count * 2 >= participants.Count)
             {
                 for (int i = 0; i < participants.Count; i++)
                 {
+                    for (int y = 0; y < participants.Count; y++)
+                    {
+
+                    }
                     SectionData SectionData = GetSectionData(startGrids.ElementAt(i));
 
-                    if (i % 2 == 0)
+                    if (SectionData.Left == null)
+                    {
                         SectionData.Left = participants[i];
-                    else
+                    }
+                    if (SectionData.Right == null)
+                    {
                         SectionData.Right = participants[i];
+                    }
                 }
             }
             else
