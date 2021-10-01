@@ -42,20 +42,28 @@ namespace Controller
         public void PlaceParticipantsOnStartGrid(Track track, List<IParticipant> participants)
         {
             LinkedList<Section> startGrids = track.GetStartGridSectionData(track.Sections);
-            for (int i = 0; i < startGrids.Count; i++)
+            if (startGrids.Count * 2 >= participants.Count)
             {
-                SectionData SectionData = GetSectionData(startGrids.ElementAt(i));
-                for (int y = 2 * i; y <= 2 * i + 1; y++)
+                for (int i = 0; i < startGrids.Count; i++)
                 {
-                    if (y < participants.Count)
+                    SectionData SectionData = GetSectionData(startGrids.ElementAt(i));
+                    for (int y = 2 * i; y <= 2 * i + 1; y++)
                     {
-                        if (y % 2 == 0)
-                            SectionData.Left = Participants[y];
-                        else
-                            SectionData.Right = Participants[y];
+                        if (y < participants.Count)
+                        {
+                            if (y % 2 == 0)
+                                SectionData.Left = Participants[y];
+                            else
+                                SectionData.Right = Participants[y];
+                        }
                     }
                 }
             }
+            else
+            {
+                throw new Exception("Not enough startgrids, add some more to your track or remove some participants!");
+            }
+            
         }
     }
 }
