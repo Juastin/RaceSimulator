@@ -120,7 +120,6 @@ namespace RaceSimulator
             DefineOffset();
             IsDefined = true;
         }
-        // Fix to also draw on stuff which is not the startgrid.
         public static string[] DrawParticipantsOnTrack(Section section, List<IParticipant> participants)
         {
             string[] Visuals = (string[])section.Visuals.Clone();
@@ -128,18 +127,11 @@ namespace RaceSimulator
             for (int i = 0; i < section.Visuals.Length; i++)
             {
                 SectionData SectionData = CurrentRace.GetSectionData(section);
-                for (int y = 2 * i; y <= 2 * i + 1; y++)
-                {
-                    {
-                        if (y % 2 == 0)
-                            if(SectionData.Left != null)
-                            Visuals[i] = section.Visuals[i].Replace('1', SectionData.Left.Name[0]);
-                        else
-                            if(SectionData.Right != null)
-                            Visuals[i] = section.Visuals[i].Replace('2', SectionData.Right.Name[0]);
-                    }
-                }
-                
+
+                if (SectionData.Left != null)
+                    Visuals[i] = Visuals[i].Replace('1', SectionData.Left.Name[0]);
+                if(SectionData.Right != null)
+                    Visuals[i] = Visuals[i].Replace('2', SectionData.Right.Name[0]);
             }
             return Visuals;
         }
