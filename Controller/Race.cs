@@ -30,6 +30,10 @@ namespace Controller
         {
             Console.WriteLine("The threshold was reached.");
         }
+        protected static void OnDriversChanged()
+        {
+
+        }
         public void Start()
         {
             timer.Start();
