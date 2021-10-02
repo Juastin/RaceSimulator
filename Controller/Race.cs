@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 
 namespace Controller
 {
@@ -10,33 +11,46 @@ namespace Controller
         public Track Track;
         public List<IParticipant> Participants;
         public DateTime StartTime;
-        private Random _random;
-        private Dictionary<Section, SectionData> _positions;
+        private Random random;
+        private Dictionary<Section, SectionData> positions;
+        private Timer timer;
 
         public Race(Track track, List<IParticipant> participants)
         {
             Track = track;
             Participants = participants;
-            _positions = new Dictionary<Section, SectionData>();
-            _random = new Random(DateTime.Now.Millisecond);
+            positions = new Dictionary<Section, SectionData>();
+            random = new Random(DateTime.Now.Millisecond);
+            timer = new Timer(500);
+            
+            timer.Elapsed += OnTimedEvent;
             PlaceParticipantsOnStartGrid(Track, Participants);
         }
+        protected static void OnTimedEvent(object sender, ElapsedEventArgs e)
+        {
+            Console.WriteLine("The threshold was reached.");
+        }
+        public void Start()
+        {
+            timer.Start();
+        }
+        
         public SectionData GetSectionData(Section Section)
         {
-            if (_positions.TryGetValue(Section, out SectionData SectionData))
+            if (positions.TryGetValue(Section, out SectionData SectionData))
             {
                 return SectionData;
             }
             SectionData = new SectionData();
-            _positions.Add(Section, SectionData);
+            positions.Add(Section, SectionData);
             return SectionData;
         }
         public void RandomizeEquipment()
         {
             foreach (IParticipant Participant in Participants)
             {
-                Participant.Equipment.Quality = _random.Next(10);
-                Participant.Equipment.Performance = _random.Next(10);
+                Participant.Equipment.Quality = random.Next(10);
+                Participant.Equipment.Performance = random.Next(10);
             }
         }
         public void PlaceParticipantsOnStartGrid(Track track, List<IParticipant> participants)
