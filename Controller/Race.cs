@@ -14,6 +14,7 @@ namespace Controller
         private Random random;
         private Dictionary<Section, SectionData> positions;
         private Timer timer;
+        public event EventHandler DriversChanged;
 
         public Race(Track track, List<IParticipant> participants)
         {
@@ -29,10 +30,6 @@ namespace Controller
         protected static void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
             Console.WriteLine("The threshold was reached.");
-        }
-        protected static void OnDriversChanged()
-        {
-
         }
         public void Start()
         {

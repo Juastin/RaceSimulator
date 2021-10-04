@@ -26,6 +26,7 @@ namespace RaceSimulator
             negativeX = 0;
             negativeY = 0;
             CurrentRace = currentRace;
+            Data.CurrentRace.DriversChanged += OnDriversChanged;
         }
         #region graphics
         private static string[] _finishHorizontal = {
@@ -94,13 +95,18 @@ namespace RaceSimulator
          };
 
         #endregion
-
-        public static void DrawTrack()
+        
+        public static void OnDriversChanged(object sender, EventArgs e)
+        {
+            DriversChangedEventArgs DriversChanged = (DriversChangedEventArgs)e;
+            DrawTrack(DriversChanged.Track);
+        }
+        public static void DrawTrack(Track track)
         {
             if (!IsDefined) 
-                DefineGraphics(CurrentRace.Track.Sections);
+                DefineGraphics(track.Sections);
 
-            foreach (Section section in CurrentRace.Track.Sections)
+            foreach (Section section in track.Sections)
             {
                 string[] Visuals = DrawParticipantsOnTrack(section, CurrentRace.Participants);
                 for (int i = 0; i < section.Visuals.Length; i++)
