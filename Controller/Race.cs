@@ -13,8 +13,11 @@ namespace Controller
         public DateTime StartTime;
         private Random random;
         private Dictionary<Section, SectionData> positions;
+        private Dictionary<int, IParticipant> leaderboard;
         private Timer timer;
+        private int SectionLength = 100;
         public event EventHandler DriversChanged;
+        public Section CurrentSection;
 
         public Race(Track track, List<IParticipant> participants)
         {
@@ -23,28 +26,81 @@ namespace Controller
             positions = new Dictionary<Section, SectionData>();
             random = new Random(DateTime.Now.Millisecond);
             timer = new Timer(500);
-            
+            leaderboard = new Dictionary<int, IParticipant>();
+
+            //CurrentSection = GetStartLine(track);
             timer.Elapsed += OnTimedEvent;
+            
             PlaceParticipantsOnStartGrid(Track, Participants);
+            Console.WriteLine();
+            //foreach (KeyValuePair<int, IParticipant> keyValuePair in leaderboard)
+            //{
+            //    Console.WriteLine($"{keyValuePair}");
+            //}
+            foreach (IParticipant participant in Participants)
+            {
+                
+                Console.WriteLine($"{GetNextSection(GetSectionByParticipant(participant)).SectionTypes}");
+                
+                if (GetSectionByParticipant(participant) == null)
+                {
+                    Console.WriteLine("isnull");
+                }
+            }
+            
+
+
         }
-        protected static void OnTimedEvent(object sender, ElapsedEventArgs e)
+        protected void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
-            Console.WriteLine("The threshold was reached.");
+            //Console.WriteLine("This is being executed after every 500ms after Start(); has been called.");
+            MoveDrivers();
+        }
+        public void MoveDrivers()
+        {
+            //GetnextSection();
+            //position[nextSection].Left == participant;
         }
         public void Start()
         {
             timer.Start();
         }
-        
-        public SectionData GetSectionData(Section Section)
+        public SectionData GetSectionData(Section section)
         {
-            if (positions.TryGetValue(Section, out SectionData SectionData))
+            if (positions.TryGetValue(section, out SectionData sectionData))
             {
-                return SectionData;
+                return sectionData;
             }
-            SectionData = new SectionData();
-            positions.Add(Section, SectionData);
-            return SectionData;
+            sectionData = new SectionData();
+            positions.Add(section, sectionData);
+            return sectionData;
+        }
+        public Section GetNextSection(Section currentSection)
+        {
+            if (Track.Sections.Find(currentSection).Next.Value != null)
+            {
+                Section p;
+                return p = Track.Sections.Find(currentSection).Next.Value;
+            }
+            else
+            {
+                return Track.Sections.First.Value;
+            }
+            
+
+
+        }
+        public Section GetSectionByParticipant(IParticipant participant)
+        {
+            foreach (Section section in Track.Sections)
+            {
+                SectionData sectionData = GetSectionData(section);
+                if (sectionData.Left == participant || sectionData.Right == participant)
+                {
+                    return section;
+                }
+            }
+            return null;
         }
         public void RandomizeEquipment()
         {
@@ -70,7 +126,11 @@ namespace Controller
                                 SectionData.Left = Participants[y];
                             else
                                 SectionData.Right = Participants[y];
+
+
+                            leaderboard.Add(y +1, participants[y]);
                         }
+                        
                     }
                 }
             }

@@ -138,7 +138,11 @@ namespace RaceSimulator
                     Visuals[i] = Visuals[i].Replace('1', SectionData.Left.Name[0]);
                 if(SectionData.Right != null)
                     Visuals[i] = Visuals[i].Replace('2', SectionData.Right.Name[0]);
+
+                //Visuals[i] = Visuals[i].Replace('1', ' ');
+                //Visuals[i] = Visuals[i].Replace('2', ' ');
             }
+            
             return Visuals;
         }
         private static void DefineOffset()

@@ -10,9 +10,10 @@ namespace RaceSimulator
         {
                 Data.Initialise();
                 Data.NextRace();
+                Data.CurrentRace.Start();
                 Visuals.Initialise(Data.CurrentRace);
                 Console.WriteLine(Data.CurrentRace.Track.Name);
-                Visuals.DrawTrack(Data.CurrentRace.Track);
+                //Visuals.DrawTrack(Data.CurrentRace.Track);
                 Thread.Sleep(100);
             for (; ; ) { }
         }
