@@ -53,7 +53,10 @@ namespace Controller
         }
         protected void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
-            //Console.WriteLine("This is being executed after every 500ms after Start(); has been called.");
+            foreach (IParticipant participant in Participants)
+            {
+
+            }
             MoveDrivers();
         }
         public void MoveDrivers()
@@ -78,17 +81,9 @@ namespace Controller
         public Section GetNextSection(Section currentSection)
         {
             if (Track.Sections.Find(currentSection).Next.Value != null)
-            {
-                Section p;
-                return p = Track.Sections.Find(currentSection).Next.Value;
-            }
+                return Track.Sections.Find(currentSection).Next.Value;
             else
-            {
                 return Track.Sections.First.Value;
-            }
-            
-
-
         }
         public Section GetSectionByParticipant(IParticipant participant)
         {

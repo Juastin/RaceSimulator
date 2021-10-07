@@ -17,6 +17,6 @@ namespace Model
         public int Points { get; set; }
         public IEquipment Equipment { get; set; }
         public TeamColors TeamColors { get; set; }
-
+        public int TraveledDistance { get; set; }
     }
 }
