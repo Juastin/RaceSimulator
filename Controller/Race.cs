@@ -69,21 +69,47 @@ namespace Controller
             Section nextSection = GetNextSection(currentSection);
             SectionData currentSectionData = GetSectionData(currentSection);
 
-            //position[nextSection].Left == participant;
             if (currentSectionData.Left == participant)
             {
-                positions[nextSection].Left = participant;
-                //Console.WriteLine($"{positions[nextSection].Left.Name}");
-                positions[currentSection].Left = null;
-                DriversChanged?.Invoke(this, new DriversChangedEventArgs() { Track = Track });
+                if (positions[nextSection].Left == null)
+                {
+                    positions[nextSection].Left = participant;
+                    positions[currentSection].Left = null;
+                    DriversChanged?.Invoke(this, new DriversChangedEventArgs() { Track = Track });
+                }
+                else
+                {
+                    if (positions[nextSection].Right == null)
+                    {
+                        if (positions[nextSection].Right == null)
+                        {
+                            positions[nextSection].Right = participant;
+                            positions[currentSection].Left = null;
+                            DriversChanged?.Invoke(this, new DriversChangedEventArgs() { Track = Track });
+                        }
+                    }
+                }
             }
             if (currentSectionData.Right == participant)
             {
-                positions[nextSection].Right = participant;
-                //Console.WriteLine($"{positions[nextSection].Right.Name}");
-                positions[currentSection].Right = null;
-                DriversChanged?.Invoke(this, new DriversChangedEventArgs() { Track = Track });
-                
+                if(positions[nextSection].Right == null) 
+                { 
+                    positions[nextSection].Right = participant;
+                    positions[currentSection].Right = null;
+                    DriversChanged?.Invoke(this, new DriversChangedEventArgs() { Track = Track });
+                }
+                else
+                {
+                    if (positions[nextSection].Left == null)
+                    {
+                        if (positions[nextSection].Left == null)
+                        {
+                            positions[nextSection].Left = participant;
+                            positions[currentSection].Right = null;
+                            DriversChanged?.Invoke(this, new DriversChangedEventArgs() { Track = Track });
+                        }
+                    }
+                }
             }
 
         }
