@@ -103,17 +103,17 @@ namespace RaceSimulator
         }
         public static void DrawTrack(Track track)
         {
-            if (!IsDefined) 
+            //if (!IsDefined) 
                 DefineGraphics(track.Sections);
 
             foreach (Section section in track.Sections)
             {
-                string[] Visuals = DrawParticipantsOnTrack(section, CurrentRace.Participants);
+                string[] Visuals = DrawParticipantsOnTrack(section);
                 for (int i = 0; i < section.Visuals.Length; i++)
                 {
                     Console.SetCursorPosition(section.X * sectionSize[0] + negativeX, section.Y * sectionSize[1] + negativeY + i);
                     Console.Write(Visuals[i]);
-                    Thread.Sleep(25);
+                    //Thread.Sleep(25);
                 }
             }
         }
@@ -126,7 +126,7 @@ namespace RaceSimulator
             DefineOffset();
             IsDefined = true;
         }
-        public static string[] DrawParticipantsOnTrack(Section section, List<IParticipant> participants)
+        public static string[] DrawParticipantsOnTrack(Section section)
         {
             string[] Visuals = (string[])section.Visuals.Clone();
 
@@ -139,10 +139,9 @@ namespace RaceSimulator
                 if(SectionData.Right != null)
                     Visuals[i] = Visuals[i].Replace('2', SectionData.Right.Name[0]);
 
-                //Visuals[i] = Visuals[i].Replace('1', ' ');
-                //Visuals[i] = Visuals[i].Replace('2', ' ');
+                Visuals[i] = Visuals[i].Replace('1', ' ');
+                Visuals[i] = Visuals[i].Replace('2', ' ');
             }
-            
             return Visuals;
         }
         private static void DefineOffset()

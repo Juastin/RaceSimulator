@@ -17,7 +17,6 @@ namespace Controller
         private Timer timer;
         private int SectionLength = 100;
         public event EventHandler DriversChanged;
-        public Section CurrentSection;
 
         public Race(Track track, List<IParticipant> participants)
         {
@@ -28,7 +27,6 @@ namespace Controller
             timer = new Timer(500);
             leaderboard = new Dictionary<int, IParticipant>();
 
-            //CurrentSection = GetStartLine(track);
             timer.Elapsed += OnTimedEvent;
             
             PlaceParticipantsOnStartGrid(Track, Participants);
@@ -37,32 +35,57 @@ namespace Controller
             //{
             //    Console.WriteLine($"{keyValuePair}");
             //}
-            foreach (IParticipant participant in Participants)
-            {
-                
-                Console.WriteLine($"{GetNextSection(GetSectionByParticipant(participant)).SectionTypes}");
-                
-                if (GetSectionByParticipant(participant) == null)
-                {
-                    Console.WriteLine("isnull");
-                }
-            }
-            
-
+            //foreach (IParticipant participant in Participants)
+            //{
+            //    
+            //    Console.WriteLine($"{GetNextSection(GetSectionByParticipant(participant)).SectionTypes}");
+            //    
+            //    if (GetSectionByParticipant(participant) == null)
+            //    {
+            //        Console.WriteLine("isnull");
+            //    }
+            //}
 
         }
         protected void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
             foreach (IParticipant participant in Participants)
             {
-
+                CalculateTraveledDistance(participant);
             }
-            MoveDrivers();
         }
-        public void MoveDrivers()
+        public void CalculateTraveledDistance(IParticipant participant)
         {
-            //GetnextSection();
+            participant.TraveledDistance += participant.Equipment.Performance * participant.Equipment.Speed;
+            if(participant.TraveledDistance >= SectionLength)
+            {
+                participant.TraveledDistance -= SectionLength;
+                MoveDriver(participant);
+            }
+        }
+        public void MoveDriver(IParticipant participant)
+        {
+            Section currentSection = GetSectionByParticipant(participant);
+            Section nextSection = GetNextSection(currentSection);
+            SectionData currentSectionData = GetSectionData(currentSection);
+
             //position[nextSection].Left == participant;
+            if (currentSectionData.Left == participant)
+            {
+                positions[nextSection].Left = participant;
+                //Console.WriteLine($"{positions[nextSection].Left.Name}");
+                positions[currentSection].Left = null;
+                DriversChanged?.Invoke(this, new DriversChangedEventArgs() { Track = Track });
+            }
+            if (currentSectionData.Right == participant)
+            {
+                positions[nextSection].Right = participant;
+                //Console.WriteLine($"{positions[nextSection].Right.Name}");
+                positions[currentSection].Right = null;
+                DriversChanged?.Invoke(this, new DriversChangedEventArgs() { Track = Track });
+                
+            }
+
         }
         public void Start()
         {
@@ -71,19 +94,25 @@ namespace Controller
         public SectionData GetSectionData(Section section)
         {
             if (positions.TryGetValue(section, out SectionData sectionData))
-            {
                 return sectionData;
-            }
             sectionData = new SectionData();
             positions.Add(section, sectionData);
             return sectionData;
         }
         public Section GetNextSection(Section currentSection)
         {
-            if (Track.Sections.Find(currentSection).Next.Value != null)
-                return Track.Sections.Find(currentSection).Next.Value;
-            else
-                return Track.Sections.First.Value;
+            //if (currentSection != null)
+            //{
+                if (Track.Sections.Find(currentSection).Next != null)
+                    return Track.Sections.Find(currentSection).Next.Value;
+                else
+                    return Track.Sections.First.Value;
+            //}
+            //return null;
+        }
+        public void EmptyPreviousSection(IParticipant participant)
+        {
+
         }
         public Section GetSectionByParticipant(IParticipant participant)
         {
@@ -91,9 +120,7 @@ namespace Controller
             {
                 SectionData sectionData = GetSectionData(section);
                 if (sectionData.Left == participant || sectionData.Right == participant)
-                {
                     return section;
-                }
             }
             return null;
         }

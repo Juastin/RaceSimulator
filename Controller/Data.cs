@@ -15,8 +15,8 @@ namespace Controller
         }
         public static void AddParticipants()
         {
-            Competition.Participants.Add(new Driver("Justin", 0, new Car(5, 10, 10, false), TeamColors.Red));
             Competition.Participants.Add(new Driver("Redmer", 0, new Car(8, 8, 7, false), TeamColors.Blue));
+            Competition.Participants.Add(new Driver("Justin", 0, new Car(5, 10, 10, false), TeamColors.Red));
             Competition.Participants.Add(new Driver("Wouter", 0, new Car(5, 10, 10, false), TeamColors.Yellow));
         }
         public static void AddTracks()
@@ -29,9 +29,7 @@ namespace Controller
         {
             Track NextTrack = Competition.NextTrack();
             if (NextTrack != null)
-            {
                 CurrentRace = new Race(NextTrack, Competition.Participants);
-            }
         }
     }
 }
