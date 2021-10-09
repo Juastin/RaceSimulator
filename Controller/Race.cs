@@ -31,21 +31,6 @@ namespace Controller
             
             PlaceParticipantsOnStartGrid(Track, Participants);
             Console.WriteLine();
-            //foreach (KeyValuePair<int, IParticipant> keyValuePair in leaderboard)
-            //{
-            //    Console.WriteLine($"{keyValuePair}");
-            //}
-            //foreach (IParticipant participant in Participants)
-            //{
-            //    
-            //    Console.WriteLine($"{GetNextSection(GetSectionByParticipant(participant)).SectionTypes}");
-            //    
-            //    if (GetSectionByParticipant(participant) == null)
-            //    {
-            //        Console.WriteLine("isnull");
-            //    }
-            //}
-
         }
         protected void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
@@ -111,7 +96,6 @@ namespace Controller
                     }
                 }
             }
-
         }
         public void Start()
         {
@@ -127,18 +111,10 @@ namespace Controller
         }
         public Section GetNextSection(Section currentSection)
         {
-            //if (currentSection != null)
-            //{
                 if (Track.Sections.Find(currentSection).Next != null)
                     return Track.Sections.Find(currentSection).Next.Value;
                 else
                     return Track.Sections.First.Value;
-            //}
-            //return null;
-        }
-        public void EmptyPreviousSection(IParticipant participant)
-        {
-
         }
         public Section GetSectionByParticipant(IParticipant participant)
         {
