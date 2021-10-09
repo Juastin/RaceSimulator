@@ -26,6 +26,7 @@ namespace RaceSimulator
             negativeX = 0;
             negativeY = 0;
             CurrentRace = currentRace;
+            Data.CurrentRace.DriversChanged += OnDriversChanged;
         }
         #region graphics
         private static string[] _finishHorizontal = {
@@ -94,20 +95,25 @@ namespace RaceSimulator
          };
 
         #endregion
-
-        public static void DrawTrack()
+        
+        public static void OnDriversChanged(object sender, EventArgs e)
         {
-            if (!IsDefined) 
-                DefineGraphics(CurrentRace.Track.Sections);
+            DriversChangedEventArgs DriversChanged = (DriversChangedEventArgs)e;
+            DrawTrack(DriversChanged.Track);
+        }
+        public static void DrawTrack(Track track)
+        {
+            //if (!IsDefined) 
+                DefineGraphics(track.Sections);
 
-            foreach (Section section in CurrentRace.Track.Sections)
+            foreach (Section section in track.Sections)
             {
-                string[] Visuals = DrawParticipantsOnTrack(section, CurrentRace.Participants);
+                string[] Visuals = DrawParticipantsOnTrack(section);
                 for (int i = 0; i < section.Visuals.Length; i++)
                 {
                     Console.SetCursorPosition(section.X * sectionSize[0] + negativeX, section.Y * sectionSize[1] + negativeY + i);
                     Console.Write(Visuals[i]);
-                    Thread.Sleep(25);
+                    //Thread.Sleep(25);
                 }
             }
         }
@@ -120,7 +126,7 @@ namespace RaceSimulator
             DefineOffset();
             IsDefined = true;
         }
-        public static string[] DrawParticipantsOnTrack(Section section, List<IParticipant> participants)
+        public static string[] DrawParticipantsOnTrack(Section section)
         {
             string[] Visuals = (string[])section.Visuals.Clone();
 
@@ -132,6 +138,9 @@ namespace RaceSimulator
                     Visuals[i] = Visuals[i].Replace('1', SectionData.Left.Name[0]);
                 if(SectionData.Right != null)
                     Visuals[i] = Visuals[i].Replace('2', SectionData.Right.Name[0]);
+
+                Visuals[i] = Visuals[i].Replace('1', ' ');
+                Visuals[i] = Visuals[i].Replace('2', ' ');
             }
             return Visuals;
         }

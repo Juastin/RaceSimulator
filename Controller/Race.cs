@@ -13,7 +13,10 @@ namespace Controller
         public DateTime StartTime;
         private Random random;
         private Dictionary<Section, SectionData> positions;
+        private Dictionary<int, IParticipant> leaderboard;
         private Timer timer;
+        private int SectionLength = 100;
+        public event EventHandler DriversChanged;
 
         public Race(Track track, List<IParticipant> participants)
         {
@@ -22,28 +25,106 @@ namespace Controller
             positions = new Dictionary<Section, SectionData>();
             random = new Random(DateTime.Now.Millisecond);
             timer = new Timer(500);
-            
+            leaderboard = new Dictionary<int, IParticipant>();
+
             timer.Elapsed += OnTimedEvent;
+            
             PlaceParticipantsOnStartGrid(Track, Participants);
+            Console.WriteLine();
         }
-        protected static void OnTimedEvent(object sender, ElapsedEventArgs e)
+        protected void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
-            Console.WriteLine("The threshold was reached.");
+            foreach (IParticipant participant in Participants)
+            {
+                CalculateTraveledDistance(participant);
+            }
+        }
+        public void CalculateTraveledDistance(IParticipant participant)
+        {
+            participant.TraveledDistance += participant.Equipment.Performance * participant.Equipment.Speed;
+            if(participant.TraveledDistance >= SectionLength)
+            {
+                participant.TraveledDistance -= SectionLength;
+                MoveDriver(participant);
+            }
+        }
+        public void MoveDriver(IParticipant participant)
+        {
+            Section currentSection = GetSectionByParticipant(participant);
+            Section nextSection = GetNextSection(currentSection);
+            SectionData currentSectionData = GetSectionData(currentSection);
+
+            if (currentSectionData.Left == participant)
+            {
+                if (positions[nextSection].Left == null)
+                {
+                    positions[nextSection].Left = participant;
+                    positions[currentSection].Left = null;
+                    DriversChanged?.Invoke(this, new DriversChangedEventArgs() { Track = Track });
+                }
+                else
+                {
+                    if (positions[nextSection].Right == null)
+                    {
+                        if (positions[nextSection].Right == null)
+                        {
+                            positions[nextSection].Right = participant;
+                            positions[currentSection].Left = null;
+                            DriversChanged?.Invoke(this, new DriversChangedEventArgs() { Track = Track });
+                        }
+                    }
+                }
+            }
+            if (currentSectionData.Right == participant)
+            {
+                if(positions[nextSection].Right == null) 
+                { 
+                    positions[nextSection].Right = participant;
+                    positions[currentSection].Right = null;
+                    DriversChanged?.Invoke(this, new DriversChangedEventArgs() { Track = Track });
+                }
+                else
+                {
+                    if (positions[nextSection].Left == null)
+                    {
+                        if (positions[nextSection].Left == null)
+                        {
+                            positions[nextSection].Left = participant;
+                            positions[currentSection].Right = null;
+                            DriversChanged?.Invoke(this, new DriversChangedEventArgs() { Track = Track });
+                        }
+                    }
+                }
+            }
         }
         public void Start()
         {
             timer.Start();
         }
-        
-        public SectionData GetSectionData(Section Section)
+        public SectionData GetSectionData(Section section)
         {
-            if (positions.TryGetValue(Section, out SectionData SectionData))
+            if (positions.TryGetValue(section, out SectionData sectionData))
+                return sectionData;
+            sectionData = new SectionData();
+            positions.Add(section, sectionData);
+            return sectionData;
+        }
+        public Section GetNextSection(Section currentSection)
+        {
+                if (Track.Sections.Find(currentSection).Next != null)
+                    return Track.Sections.Find(currentSection).Next.Value;
+                else
+                    return Track.Sections.First.Value;
+        }
+        public Section GetSectionByParticipant(IParticipant participant)
+        {
+            foreach (Section section in Track.Sections)
             {
-                return SectionData;
+                SectionData sectionData = GetSectionData(section);
+                if (sectionData.Left == participant || sectionData.Right == participant)
+                    return section;
             }
-            SectionData = new SectionData();
-            positions.Add(Section, SectionData);
-            return SectionData;
+            return null;
         }
         public void RandomizeEquipment()
         {
@@ -69,7 +150,11 @@ namespace Controller
                                 SectionData.Left = Participants[y];
                             else
                                 SectionData.Right = Participants[y];
+
+
+                            leaderboard.Add(y +1, participants[y]);
                         }
+                        
                     }
                 }
             }
