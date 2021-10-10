@@ -30,7 +30,6 @@ namespace Controller
             timer.Elapsed += OnTimedEvent;
             
             PlaceParticipantsOnStartGrid(Track, Participants);
-            Console.WriteLine();
         }
         protected void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
@@ -111,10 +110,14 @@ namespace Controller
         }
         public Section GetNextSection(Section currentSection)
         {
+            if (Track.Sections.Contains(currentSection)) 
+            { 
                 if (Track.Sections.Find(currentSection).Next != null)
                     return Track.Sections.Find(currentSection).Next.Value;
                 else
                     return Track.Sections.First.Value;
+            }
+            return Track.Sections.First.Value;
         }
         public Section GetSectionByParticipant(IParticipant participant)
         {
