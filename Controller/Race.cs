@@ -16,7 +16,10 @@ namespace Controller
         private Dictionary<int, IParticipant> leaderboard;
         private Timer timer;
         private int SectionLength = 100;
+        private int maxLaps = 1;
         public event EventHandler DriversChanged;
+        public bool RaceFinished = false;
+        public int AmountFinished = 0;
 
         public Race(Track track, List<IParticipant> participants)
         {
@@ -47,10 +50,20 @@ namespace Controller
                 MoveDriver(participant);
             }
         }
+        public void CollectEventHandlerGarbage()
+        {
+            timer.Elapsed -= OnTimedEvent;
+            timer = null;
+            DriversChanged = null;
+            RaceFinished = false;
+        }
         public void MoveDriver(IParticipant participant)
         {
+            if (participant.LapsDriven >= maxLaps)
+                return;
+
             Section currentSection = GetSectionByParticipant(participant);
-            Section nextSection = GetNextSection(currentSection);
+            Section nextSection = GetNextSection(currentSection, participant);
             SectionData currentSectionData = GetSectionData(currentSection);
 
             if (currentSectionData.Left == participant)
@@ -100,6 +113,27 @@ namespace Controller
         {
             timer.Start();
         }
+        public void RemoveFromTrack(IParticipant participant)
+        {
+            SectionData participantSectionData = GetSectionData(GetSectionByParticipant(participant));
+            if (participantSectionData.Left == participant)
+            {
+                participantSectionData.Left = null;
+
+            }
+            if (participantSectionData.Right == participant)
+            {
+                participantSectionData.Right = null;
+            }
+            AmountFinished++;
+            DriversChanged?.Invoke(this, new DriversChangedEventArgs() { Track = Track });
+            if (AmountFinished >= Participants.Count)
+            {
+                RaceFinished = true;
+                
+            }
+                
+        }
         public SectionData GetSectionData(Section section)
         {
             if (positions.TryGetValue(section, out SectionData sectionData))
@@ -108,14 +142,19 @@ namespace Controller
             positions.Add(section, sectionData);
             return sectionData;
         }
-        public Section GetNextSection(Section currentSection)
+        public Section GetNextSection(Section currentSection, IParticipant participant)
         {
             if (Track.Sections.Contains(currentSection)) 
-            { 
+            {
                 if (Track.Sections.Find(currentSection).Next != null)
                     return Track.Sections.Find(currentSection).Next.Value;
                 else
-                    return Track.Sections.First.Value;
+                    participant.LapsDriven++;
+                    if (participant.LapsDriven >= maxLaps)
+                    {
+                        RemoveFromTrack(participant);
+                    }
+                return Track.Sections.First.Value;
             }
             return Track.Sections.First.Value;
         }

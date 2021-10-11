@@ -16,7 +16,6 @@ namespace RaceSimulator
         private static int[] sectionSize;
         private static int negativeX;
         private static int negativeY;
-        private static bool IsDefined;
         public static void Initialise(Race currentRace)
         {
             compass = 1;
@@ -103,7 +102,6 @@ namespace RaceSimulator
         }
         public static void DrawTrack(Track track)
         {
-            //if (!IsDefined) 
                 DefineGraphics(track.Sections);
 
             foreach (Section section in track.Sections)
@@ -113,7 +111,6 @@ namespace RaceSimulator
                 {
                     Console.SetCursorPosition(section.X * sectionSize[0] + negativeX, section.Y * sectionSize[1] + negativeY + i);
                     Console.Write(Visuals[i]);
-                    //Thread.Sleep(25);
                 }
             }
         }
@@ -124,7 +121,6 @@ namespace RaceSimulator
                 DefineSection(section);
             }
             DefineOffset();
-            IsDefined = true;
         }
         public static string[] DrawParticipantsOnTrack(Section section)
         {

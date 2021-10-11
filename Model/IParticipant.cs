@@ -18,5 +18,6 @@ namespace Model
         public IEquipment Equipment { get; set; }
         public TeamColors TeamColors { get; set; }
         public int TraveledDistance { get; set; }
+        public int LapsDriven { get; set; }
     }
 }

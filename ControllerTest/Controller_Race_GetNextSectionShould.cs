@@ -26,18 +26,18 @@ namespace ControllerTest
             Participants = new List<IParticipant>();
             Participants.Add(new Driver("test", 0, new Car(5, 10, 10, false), TeamColors.Red));
             Race = new Race(Track, Participants);
-
+            
         }
         [Test]
         public void GetNextSection_ShouldBeNextSection() 
         {
-            Section nextSection = Race.GetNextSection(CurrentSection);
+            Section nextSection = Race.GetNextSection(CurrentSection, Participants[0]);
             Assert.AreEqual(nextSection, Track.Sections.ElementAt(1));
         }
         [Test]
         public void GetNextSection_IfnotNextSectionReturnFirstSection()
         {
-            Section firstSection = Race.GetNextSection(TestSection);
+            Section firstSection = Race.GetNextSection(TestSection, Participants[0]);
             Assert.AreEqual(firstSection, Track.Sections.ElementAt(0));
         }
     }
