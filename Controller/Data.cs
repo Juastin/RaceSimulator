@@ -8,6 +8,8 @@ namespace Controller
         public static Competition Competition { get; set; }
         public static Race CurrentRace { get; set; }
 
+        public static event EventHandler NewVisuals;
+
         public static void Initialise()
         {
             Competition = new Competition();
@@ -41,8 +43,9 @@ namespace Controller
             if (NextTrack != null)
             {
                 CurrentRace = new Race(NextTrack, Competition.Participants);
-                CurrentRace.RaceFinished += OnRaceFinished;
-
+                //CurrentRace.RaceFinished += OnRaceFinished;
+                NewVisuals?.Invoke(CurrentRace, new EventArgs());
+                CurrentRace.Start();
             }
         }
     }

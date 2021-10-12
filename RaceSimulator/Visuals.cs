@@ -27,7 +27,7 @@ namespace RaceSimulator
             CurrentRace = currentRace;
             Data.CurrentRace.DriversChanged += OnDriversChanged;
             DrawTrack(currentRace.Track);
-            Data.CurrentRace.NewVisuals += OnNewVisuals;
+            Data.NewVisuals += OnNewVisuals;
         }
         #region graphics
         private static string[] _finishHorizontal = {
@@ -104,8 +104,10 @@ namespace RaceSimulator
         }
         public static void OnNewVisuals(object sender, EventArgs e)
         {
-            Visuals.Initialise(Data.CurrentRace);
-            Data.CurrentRace.NewVisuals += OnNewVisuals;
+            Initialise(Data.CurrentRace);
+            DrawTrack(Data.CurrentRace.Track);
+            //Data.NewVisuals += OnNewVisuals;
+            //Console.WriteLine("OnNewVisuals is called");
         }
         public static void DrawTrack(Track track)
         {
