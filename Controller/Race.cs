@@ -19,6 +19,7 @@ namespace Controller
         private int maxLaps = 1;
         public event EventHandler DriversChanged;
         public event EventHandler RaceFinished;
+        public event EventHandler NewVisuals;
         public int AmountFinished = 0;
 
         public Race(Track track, List<IParticipant> participants)
@@ -33,6 +34,7 @@ namespace Controller
             timer.Elapsed += OnTimedEvent;
             
             PlaceParticipantsOnStartGrid(Track, Participants);
+            NewVisuals?.Invoke(this, new EventArgs());
         }
         protected void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
@@ -52,6 +54,7 @@ namespace Controller
         }
         public void CollectEventHandlerGarbage()
         {
+            Console.Clear();
             timer.Elapsed -= OnTimedEvent;
             timer = null;
             DriversChanged = null;

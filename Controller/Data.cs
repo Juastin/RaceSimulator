@@ -1,4 +1,5 @@
 ﻿using Model;
+using System;
 
 namespace Controller
 {
@@ -19,7 +20,6 @@ namespace Controller
         private static void OnRaceFinished(object sender, System.EventArgs e)
         {
             NextRace();
-
         }
 
         public static void AddParticipants()
@@ -42,6 +42,7 @@ namespace Controller
             {
                 CurrentRace = new Race(NextTrack, Competition.Participants);
                 CurrentRace.RaceFinished += OnRaceFinished;
+
             }
         }
     }
