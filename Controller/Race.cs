@@ -18,7 +18,7 @@ namespace Controller
         private int SectionLength = 100;
         private int maxLaps = 1;
         public event EventHandler DriversChanged;
-        public bool RaceFinished = false;
+        public event EventHandler RaceFinished;
         public int AmountFinished = 0;
 
         public Race(Track track, List<IParticipant> participants)
@@ -55,7 +55,7 @@ namespace Controller
             timer.Elapsed -= OnTimedEvent;
             timer = null;
             DriversChanged = null;
-            RaceFinished = false;
+            RaceFinished = null;
         }
         public void MoveDriver(IParticipant participant)
         {
@@ -129,10 +129,8 @@ namespace Controller
             DriversChanged?.Invoke(this, new DriversChangedEventArgs() { Track = Track });
             if (AmountFinished >= Participants.Count)
             {
-                RaceFinished = true;
-                
+                RaceFinished?.Invoke(this, new EventArgs());
             }
-                
         }
         public SectionData GetSectionData(Section section)
         {
@@ -192,7 +190,6 @@ namespace Controller
                                 SectionData.Left = Participants[y];
                             else
                                 SectionData.Right = Participants[y];
-
 
                             leaderboard.Add(y +1, participants[y]);
                         }

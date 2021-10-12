@@ -26,6 +26,7 @@ namespace RaceSimulator
             negativeY = 0;
             CurrentRace = currentRace;
             Data.CurrentRace.DriversChanged += OnDriversChanged;
+            DrawTrack(currentRace.Track);
         }
         #region graphics
         private static string[] _finishHorizontal = {
