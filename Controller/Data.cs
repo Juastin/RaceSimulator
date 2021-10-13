@@ -39,7 +39,7 @@ namespace Controller
         }
         public static void NextRace()
         {
-            //CurrentRace?.CollectEventHandlerGarbage();
+            CurrentRace?.CollectEventHandlerGarbage();
             Track NextTrack = Competition.NextTrack();
             if (NextTrack != null)
             {

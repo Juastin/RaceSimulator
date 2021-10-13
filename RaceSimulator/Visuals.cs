@@ -26,6 +26,7 @@ namespace RaceSimulator
             negativeY = 0;
             CurrentRace = currentRace;
             Data.CurrentRace.DriversChanged += OnDriversChanged;
+            Console.WriteLine(Data.CurrentRace.Track.Name);
             DrawTrack(currentRace.Track);
             Data.NewVisuals += OnNewVisuals;
         }
@@ -105,7 +106,7 @@ namespace RaceSimulator
         public static void OnNewVisuals(object sender, EventArgs e)
         {
             Initialise(Data.CurrentRace);
-            DrawTrack(Data.CurrentRace.Track);
+            //DrawTrack(Data.CurrentRace.Track);
             //Data.NewVisuals += OnNewVisuals;
             //Console.WriteLine("OnNewVisuals is called");
         }

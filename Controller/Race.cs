@@ -135,7 +135,6 @@ namespace Controller
             if (AmountFinished >= Participants.Count)
             {
                 RaceFinished?.Invoke(this, new EventArgs());
-                CollectEventHandlerGarbage();
                 foreach (IParticipant finishedDriver in Participants)
                 {
                     finishedDriver.LapsDriven = 0;
