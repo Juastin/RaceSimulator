@@ -55,11 +55,12 @@ namespace Controller
         }
         public void CollectEventHandlerGarbage()
         {
-            //Console.Clear();
-            //timer.Elapsed -= OnTimedEvent;
-            //timer = null;
-            //DriversChanged = null;
-            //RaceFinished = null;
+            Console.Clear();
+            timer.Elapsed -= OnTimedEvent;
+            timer = null;
+            AmountFinished = 0;
+            DriversChanged = null;
+            RaceFinished = null;
         }
         public void MoveDriver(IParticipant participant)
         {
