@@ -2,29 +2,26 @@
 using Model;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 
 namespace RaceSimulator
 {
     public static class Visuals
     {
-        private static int lastX;
-        private static int lastY;
+        private static int _lastX;
+        private static int _lastY;
         public static Race CurrentRace { get; set; }
-        private static int compass;
-        private static int[] sectionSize;
-        private static int negativeX;
-        private static int negativeY;
-        private static bool isDefined;
+        private static int _compass;
+        private static int[] _sectionSize;
+        private static int _negativeX;
+        private static int _negativeY;
         public static void Initialise(Race currentRace)
         {
-            compass = 1;
-            lastX = 0;
-            lastY = 1;
-            sectionSize = new int[] { 5, 4 };
-            negativeX = 0;
-            negativeY = 0;
+            _compass = 1;
+            _lastX = 0;
+            _lastY = 1;
+            _sectionSize = new[] { 5, 4 };
+            _negativeX = 0;
+            _negativeY = 0;
             CurrentRace = currentRace;
             Data.CurrentRace.DriversChanged += OnDriversChanged;
             Console.WriteLine(Data.CurrentRace.Track.Name);
@@ -101,8 +98,8 @@ namespace RaceSimulator
         
         public static void OnDriversChanged(object sender, EventArgs e)
         {
-            DriversChangedEventArgs DriversChanged = (DriversChangedEventArgs)e;
-            DrawTrack(DriversChanged.Track);
+            DriversChangedEventArgs driversChanged = (DriversChangedEventArgs)e;
+            DrawTrack(driversChanged.Track);
         }
         public static void OnNewVisuals(object sender, EventArgs e)
         {
@@ -121,7 +118,7 @@ namespace RaceSimulator
                 string[] Visuals = DrawParticipantsOnTrack(section);
                 for (int i = 0; i < section.Visuals.Length; i++)
                 {
-                    Console.SetCursorPosition(section.X * sectionSize[0] + negativeX, section.Y * sectionSize[1] + negativeY + i);
+                    Console.SetCursorPosition(section.X * _sectionSize[0] + _negativeX, section.Y * _sectionSize[1] + _negativeY + i);
                     Console.Write(Visuals[i]);
                 }
             }
@@ -132,96 +129,95 @@ namespace RaceSimulator
             {
                 DefineSection(section);
             }
-            isDefined = true;
             DefineOffset();
         }
         public static string[] DrawParticipantsOnTrack(Section section)
         {
-            string[] Visuals = (string[])section.Visuals.Clone();
+            string[] clone = (string[])section.Visuals.Clone();
 
             for (int i = 0; i < section.Visuals.Length; i++)
             {
-                SectionData SectionData = CurrentRace.GetSectionData(section);
+                SectionData sectionData = CurrentRace.GetSectionData(section);
                 
-                if (SectionData.Left != null)
-                    Visuals[i] = Visuals[i].Replace('1', SectionData.Left.Name[0]);
-                if(SectionData.Right != null)
-                    Visuals[i] = Visuals[i].Replace('2', SectionData.Right.Name[0]);
+                if (sectionData.Left != null)
+                    clone[i] = clone[i].Replace('1', sectionData.Left.Name[0]);
+                if(sectionData.Right != null)
+                    clone[i] = clone[i].Replace('2', sectionData.Right.Name[0]);
 
-                Visuals[i] = Visuals[i].Replace('1', ' ');
-                Visuals[i] = Visuals[i].Replace('2', ' ');
+                clone[i] = clone[i].Replace('1', ' ');
+                clone[i] = clone[i].Replace('2', ' ');
             }
-            return Visuals;
+            return clone;
         }
         private static void DefineOffset()
         {
-            negativeX = Math.Abs(negativeX);
-            negativeY = Math.Abs(negativeY);
+            _negativeX = Math.Abs(_negativeX);
+            _negativeY = Math.Abs(_negativeY);
         }
         public static void DefineSection(Section section)
         {
-            section.X = lastX;
-            section.Y = lastY;
+            section.X = _lastX;
+            section.Y = _lastY;
             switch (section.SectionTypes)
             {
                 case SectionTypes.StartGrid:
-                    if (compass == 0 || compass == 2)
+                    if (_compass == 0 || _compass == 2)
                         section.Visuals = _startGridVertical;
                     else
                         section.Visuals = _startGridHorizontal;
                     break;
                 case SectionTypes.RightCorner:
-                    if (compass == 0)
+                    if (_compass == 0)
                         section.Visuals = _cornerSE;
-                    if (compass == 1)
+                    if (_compass == 1)
                         section.Visuals = _cornerSW;
-                    if (compass == 2)
+                    if (_compass == 2)
                         section.Visuals = _cornerNW;
-                    if (compass == 3)
+                    if (_compass == 3)
                         section.Visuals = _cornerNE;
-                    compass++;
+                    _compass++;
                     break;
                 case SectionTypes.LeftCorner:
-                    if (compass == 0)
+                    if (_compass == 0)
                         section.Visuals = _cornerSW;
-                    if (compass == 1)
+                    if (_compass == 1)
                         section.Visuals = _cornerNW;
-                    if (compass == 2)
+                    if (_compass == 2)
                         section.Visuals = _cornerNE;
-                    if (compass == 3)
+                    if (_compass == 3)
                         section.Visuals = _cornerSE;
-                    compass--;
+                    _compass--;
                     break;
                 case SectionTypes.Straight:
-                    if (compass == 0 || compass == 2)
+                    if (_compass == 0 || _compass == 2)
                         section.Visuals = _straightVertical;
                     else
                         section.Visuals = _straightHorizontal;
                     break;
                 case SectionTypes.Finish:
-                    if (compass == 0 || compass == 2)
+                    if (_compass == 0 || _compass == 2)
                         section.Visuals = _finishVertical;
                     else
                         section.Visuals = _finishHorizontal;
                     break;
             }
-            if (compass == 4)
-                compass = 0;
-            if (compass == -1)
-                compass = 3;
-            if (compass == 0)
-                lastY--;
-            if (compass == 1)
-                lastX++;
-            if (compass == 2)
-                lastY++;
-            if (compass == 3)
-                lastX--;
+            if (_compass == 4)
+                _compass = 0;
+            if (_compass == -1)
+                _compass = 3;
+            if (_compass == 0)
+                _lastY--;
+            if (_compass == 1)
+                _lastX++;
+            if (_compass == 2)
+                _lastY++;
+            if (_compass == 3)
+                _lastX--;
 
-            if (lastX * sectionSize[0] < negativeX)
-                negativeX = lastX * sectionSize[0];
-            if (lastY * sectionSize[1] < negativeY)
-                negativeY = lastY * sectionSize[1];
+            if (_lastX * _sectionSize[0] < _negativeX)
+                _negativeX = _lastX * _sectionSize[0];
+            if (_lastY * _sectionSize[1] < _negativeY)
+                _negativeY = _lastY * _sectionSize[1];
         }
 
     }

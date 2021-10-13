@@ -15,8 +15,8 @@ namespace Controller
         private Dictionary<Section, SectionData> positions;
         private Dictionary<int, IParticipant> leaderboard;
         private Timer timer;
-        private int SectionLength = 100;
-        private int maxLaps = 1;
+        private const int SectionLength = 100;
+        private const int MaxLaps = 1;
         public event EventHandler DriversChanged;
         public event EventHandler RaceFinished;
         
@@ -94,7 +94,7 @@ namespace Controller
         // TODO make solid
         public void MoveDriver(IParticipant participant)
         {
-            if (participant.LapsDriven >= maxLaps)
+            if (participant.LapsDriven >= MaxLaps)
                 return;
 
             Section currentSection = GetSectionByParticipant(participant);
@@ -187,14 +187,14 @@ namespace Controller
         {
             if (Track.Sections.Contains(currentSection)) 
             {
-                if (Track.Sections.Find(currentSection).Next != null)
-                    return Track.Sections.Find(currentSection).Next.Value;
+                if (Track.Sections.Find(currentSection)?.Next != null)
+                    return Track.Sections.Find(currentSection)?.Next.Value;
                 else
                     participant.LapsDriven++;
-                    if (participant.LapsDriven >= maxLaps)
-                    {
-                        RemoveFromTrack(participant);
-                    }
+                if (participant.LapsDriven >= MaxLaps)
+                {
+                    RemoveFromTrack(participant);
+                }
                 return Track.Sections.First.Value;
             }
             return Track.Sections.First.Value;
@@ -211,10 +211,10 @@ namespace Controller
         }
         public void RandomizeEquipment()
         {
-            foreach (IParticipant Participant in Participants)
+            foreach (IParticipant participant in Participants)
             {
-                Participant.Equipment.Quality = random.Next(5,10);
-                Participant.Equipment.Performance = random.Next(5,10);
+                participant.Equipment.Quality = random.Next(5,10);
+                participant.Equipment.Performance = random.Next(5,10);
             }
         }
         public void PlaceParticipantsOnStartGrid(Track track, List<IParticipant> participants)
@@ -224,15 +224,15 @@ namespace Controller
             {
                 for (int i = 0; i < startGrids.Count; i++)
                 {
-                    SectionData SectionData = GetSectionData(startGrids.ElementAt(i));
+                    SectionData sectionData = GetSectionData(startGrids.ElementAt(i));
                     for (int y = 2 * i; y <= 2 * i + 1; y++)
                     {
                         if (y < participants.Count)
                         {
                             if (y % 2 == 0)
-                                SectionData.Left = Participants[y];
+                                sectionData.Left = Participants[y];
                             else
-                                SectionData.Right = Participants[y];
+                                sectionData.Right = Participants[y];
 
                             leaderboard.Add(y +1, participants[y]);
                         }
@@ -242,7 +242,7 @@ namespace Controller
             }
             else
             {
-                throw new Exception("Not enough startgrids, add some more to your track or remove some participants!");
+                throw new Exception("Not enough startGrids, add some more to your track or remove some participants!");
             }
             
         }

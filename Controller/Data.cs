@@ -35,15 +35,15 @@ namespace Controller
         {
             Competition.Tracks.Enqueue(new Track("HermansSnackCorner", new SectionTypes[] { SectionTypes.StartGrid, SectionTypes.StartGrid, SectionTypes.RightCorner, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.Finish }));
             Competition.Tracks.Enqueue(new Track("Windesheim Cross", new SectionTypes[] { SectionTypes.StartGrid, SectionTypes.StartGrid, SectionTypes.RightCorner, SectionTypes.LeftCorner, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.LeftCorner, SectionTypes.RightCorner, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.Finish }));
-            Competition.Tracks.Enqueue(new Track("HermansSnackCorner", new SectionTypes[] { SectionTypes.StartGrid, SectionTypes.StartGrid, SectionTypes.StartGrid, SectionTypes.LeftCorner, SectionTypes.LeftCorner, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.LeftCorner, SectionTypes.LeftCorner, SectionTypes.Finish }));
+            Competition.Tracks.Enqueue(new Track("HermansSnackCorner Inverted", new SectionTypes[] { SectionTypes.StartGrid, SectionTypes.StartGrid, SectionTypes.StartGrid, SectionTypes.LeftCorner, SectionTypes.LeftCorner, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.LeftCorner, SectionTypes.LeftCorner, SectionTypes.Finish }));
         }
         public static void NextRace()
         {
             CurrentRace?.CollectEventHandlerGarbage();
-            Track NextTrack = Competition.NextTrack();
-            if (NextTrack != null)
+            Track nextTrack = Competition.NextTrack();
+            if (nextTrack != null)
             {
-                CurrentRace = new Race(NextTrack, Competition.Participants);
+                CurrentRace = new Race(nextTrack, Competition.Participants);
                 //CurrentRace.RaceFinished += OnRaceFinished;
                 NewVisuals?.Invoke(CurrentRace, new EventArgs());
                 CurrentRace.Start();
