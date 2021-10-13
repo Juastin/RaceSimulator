@@ -12,6 +12,7 @@ namespace Model
         public TeamColors TeamColors { get; set; }
         public int TraveledDistance { get; set; }
         public int LapsDriven { get; set; }
+        public bool IsBroken { get; set; }
 
         public Driver(string name, int points, IEquipment equipment, TeamColors teamColors)
         {

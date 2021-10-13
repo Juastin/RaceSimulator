@@ -11,11 +11,12 @@ namespace RaceSimulator
     {
         private static int lastX;
         private static int lastY;
-        public static Race CurrentRace;
+        public static Race CurrentRace { get; set; }
         private static int compass;
         private static int[] sectionSize;
         private static int negativeX;
         private static int negativeY;
+        private static bool isDefined;
         public static void Initialise(Race currentRace)
         {
             compass = 1;
@@ -113,6 +114,7 @@ namespace RaceSimulator
         public static void DrawTrack(Track track)
         {
                 DefineGraphics(track.Sections);
+                                
 
             foreach (Section section in track.Sections)
             {
@@ -130,6 +132,7 @@ namespace RaceSimulator
             {
                 DefineSection(section);
             }
+            isDefined = true;
             DefineOffset();
         }
         public static string[] DrawParticipantsOnTrack(Section section)
@@ -139,7 +142,7 @@ namespace RaceSimulator
             for (int i = 0; i < section.Visuals.Length; i++)
             {
                 SectionData SectionData = CurrentRace.GetSectionData(section);
-
+                
                 if (SectionData.Left != null)
                     Visuals[i] = Visuals[i].Replace('1', SectionData.Left.Name[0]);
                 if(SectionData.Right != null)
@@ -202,8 +205,10 @@ namespace RaceSimulator
                         section.Visuals = _finishHorizontal;
                     break;
             }
-            if (compass == 4 || compass == -1)
+            if (compass == 4)
                 compass = 0;
+            if (compass == -1)
+                compass = 3;
             if (compass == 0)
                 lastY--;
             if (compass == 1)

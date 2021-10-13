@@ -8,9 +8,9 @@ namespace Controller
 {
     public class Race
     {
-        public Track Track;
-        public List<IParticipant> Participants;
-        public DateTime StartTime;
+        public Track Track { get; set; }
+        public List<IParticipant> Participants { get; set; }
+        public DateTime StartTime { get; set; }
         private Random random;
         private Dictionary<Section, SectionData> positions;
         private Dictionary<int, IParticipant> leaderboard;
@@ -20,10 +20,11 @@ namespace Controller
         public event EventHandler DriversChanged;
         public event EventHandler RaceFinished;
         
-        public int AmountFinished = 0;
+        public int AmountFinished { get; set; }
 
         public Race(Track track, List<IParticipant> participants)
         {
+            AmountFinished = 0;
             Track = track;
             Participants = participants;
             positions = new Dictionary<Section, SectionData>();
@@ -41,16 +42,44 @@ namespace Controller
         {
             foreach (IParticipant participant in Participants)
             {
+                DriversChanged?.Invoke(this, new DriversChangedEventArgs() { Track = Track });
                 CalculateTraveledDistance(participant);
             }
         }
         public void CalculateTraveledDistance(IParticipant participant)
         {
+            CalculateIsBroken(participant);
+            CalculateIsFixed(participant);
+            if (participant.IsBroken == true)
+                return;
+
             participant.TraveledDistance += participant.Equipment.Performance * participant.Equipment.Speed;
             if(participant.TraveledDistance >= SectionLength)
             {
                 participant.TraveledDistance -= SectionLength;
                 MoveDriver(participant);
+            }
+        }
+        public void CalculateIsBroken(IParticipant participant)
+        {
+            int quality = participant.Equipment.Quality;
+            if (random.Next(1, 10 / quality + quality) == 1)
+            {
+                participant.IsBroken = true;
+
+                if (participant.Name[0] != '*')
+                    participant.Name = "*" + participant.Name;
+
+            }
+        }
+        public void CalculateIsFixed(IParticipant participant)
+        {
+            int quality = participant.Equipment.Quality;
+            if (random.Next(1, 10 / quality + quality) == 1)
+            {
+                participant.IsBroken = false;
+                if (participant.Name[0] == '*')
+                    participant.Name = participant.Name[1..];
             }
         }
         public void CollectEventHandlerGarbage()
@@ -62,6 +91,7 @@ namespace Controller
             DriversChanged = null;
             RaceFinished = null;
         }
+        // TODO make solid
         public void MoveDriver(IParticipant participant)
         {
             if (participant.LapsDriven >= maxLaps)
@@ -70,6 +100,7 @@ namespace Controller
             Section currentSection = GetSectionByParticipant(participant);
             Section nextSection = GetNextSection(currentSection, participant);
             SectionData currentSectionData = GetSectionData(currentSection);
+            SectionData nextSectionData = GetSectionData(nextSection);
 
             if (currentSectionData.Left == participant)
             {
