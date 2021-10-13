@@ -35,7 +35,7 @@ namespace Controller
             timer.Elapsed += OnTimedEvent;
             
             PlaceParticipantsOnStartGrid(Track, Participants);
-
+            RandomizeEquipment();
             
         }
         protected void OnTimedEvent(object sender, ElapsedEventArgs e)
@@ -63,7 +63,7 @@ namespace Controller
         public void CalculateIsBroken(IParticipant participant)
         {
             int quality = participant.Equipment.Quality;
-            if (random.Next(1, 10 / quality + quality) == 1)
+            if (random.Next(1, 10 / quality + quality + 2) == 1)
             {
                 participant.IsBroken = true;
 
@@ -75,7 +75,7 @@ namespace Controller
         public void CalculateIsFixed(IParticipant participant)
         {
             int quality = participant.Equipment.Quality;
-            if (random.Next(1, 10 / quality + quality) == 1)
+            if (random.Next(1, 10 / quality + quality + 2) == 1)
             {
                 participant.IsBroken = false;
                 if (participant.Name[0] == '*')
@@ -175,6 +175,8 @@ namespace Controller
         }
         public SectionData GetSectionData(Section section)
         {
+            if (section == null)
+                return new SectionData();
             if (positions.TryGetValue(section, out SectionData sectionData))
                 return sectionData;
             sectionData = new SectionData();
@@ -211,8 +213,8 @@ namespace Controller
         {
             foreach (IParticipant Participant in Participants)
             {
-                Participant.Equipment.Quality = random.Next(10);
-                Participant.Equipment.Performance = random.Next(10);
+                Participant.Equipment.Quality = random.Next(5,10);
+                Participant.Equipment.Performance = random.Next(5,10);
             }
         }
         public void PlaceParticipantsOnStartGrid(Track track, List<IParticipant> participants)
