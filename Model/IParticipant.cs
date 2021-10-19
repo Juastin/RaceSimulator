@@ -6,7 +6,7 @@ public enum TeamColors
     Red,
     Green,
     Yellow,
-    Grey,
+    Pink,
     Blue
 }
 namespace Model
