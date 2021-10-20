@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using Controller;
+using Model;
 
 namespace RaceSimulatorWPF
 {
@@ -22,7 +25,24 @@ namespace RaceSimulatorWPF
     {
         public MainWindow()
         {
-            InitializeComponent();
+            Data.Initialise();
+            Visuals.Initialise(Data.CurrentRace);
+            Data.CurrentRace.Start();
+            Data.CurrentRace.DriversChanged += OnDriversChanged;
+
+
+        }
+        public void OnDriversChanged(object sender, EventArgs e)
+        {
+            DriversChangedEventArgs driversChanged = (DriversChangedEventArgs)e;
+            this.Image.Dispatcher.BeginInvoke(
+                DispatcherPriority.Render,
+                new Action(() =>
+                {
+                    this.Image.Source = null;
+                    this.Image.Source = Visuals.DrawTrack(driversChanged.Track);
+                }));
+
         }
     }
 }

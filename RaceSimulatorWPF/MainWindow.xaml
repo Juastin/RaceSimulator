@@ -11,7 +11,7 @@
             <ColumnDefinition Width="7*"/>
             <ColumnDefinition Width="13*"/>
         </Grid.ColumnDefinitions>
-        <Grid.Background>OliveDrab</Grid.Background>
-        <Image Grid.ColumnSpan="2" Margin="28,28,28,28"></Image>
+        <Grid.Background>White</Grid.Background>
+        <Image Name="Image" Grid.ColumnSpan="2" Margin="28,28,28,28"></Image>
     </Grid>
 </Window>

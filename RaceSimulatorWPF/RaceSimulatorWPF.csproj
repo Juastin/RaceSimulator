@@ -76,4 +76,18 @@
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Controller\Controller.csproj" />
+    <ProjectReference Include="..\Model\Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="ImageHandler.cs">
+      <CustomToolNamespace>ImageHandler</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Visuals.cs">
+      <CustomToolNamespace>Visuals</CustomToolNamespace>
+    </Compile>
+  </ItemGroup>
+
 </Project>
