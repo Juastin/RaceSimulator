@@ -19,6 +19,7 @@ namespace Model
         public int X { get; set; }
         public int Y { get; set; }
         public string[] Visuals { get; set; }
+        public string Url { get; set; }
 
         public Section(SectionTypes sectionTypes)
         {

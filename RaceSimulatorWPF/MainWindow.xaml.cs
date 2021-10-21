@@ -29,8 +29,6 @@ namespace RaceSimulatorWPF
             Visuals.Initialise(Data.CurrentRace);
             Data.CurrentRace.Start();
             Data.CurrentRace.DriversChanged += OnDriversChanged;
-
-
         }
         public void OnDriversChanged(object sender, EventArgs e)
         {
