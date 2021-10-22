@@ -9,14 +9,16 @@ namespace Controller
         public static Race CurrentRace { get; set; }
 
         public static event EventHandler NewVisuals;
+        public static bool IsWpf { get; set; }
 
-        public static void Initialise()
+        public static void Initialise(bool isWpf)
         {
             Competition = new Competition();
             AddParticipants();
             AddTracks();
             NextRace();
             CurrentRace.RaceFinished += OnRaceFinished;
+            IsWpf = isWpf;
         }
 
         private static void OnRaceFinished(object sender, System.EventArgs e)
@@ -27,9 +29,9 @@ namespace Controller
 
         public static void AddParticipants()
         {
-            Competition.Participants.Add(new Driver("Justin", 0, new Car(5, 10, 10, false), TeamColors.Red));
-            Competition.Participants.Add(new Driver("Wouter", 0, new Car(5, 10, 10, false), TeamColors.Yellow));
-            Competition.Participants.Add(new Driver("Redmer", 0, new Car(5, 10, 10, false), TeamColors.Blue));
+            Competition.Participants.Add(new Driver("Justin", 0, new Car(5, 20, 20, false), TeamColors.Red));
+            Competition.Participants.Add(new Driver("Wouter", 0, new Car(5, 20, 20, false), TeamColors.Yellow));
+            Competition.Participants.Add(new Driver("Redmer", 0, new Car(5, 20, 20, false), TeamColors.Blue));
         }
         public static void AddTracks()
         {
@@ -39,12 +41,19 @@ namespace Controller
         }
         public static void NextRace()
         {
-            CurrentRace?.CollectEventHandlerGarbage();
+            if (IsWpf == false)
+            {
+                CurrentRace?.CollectEventHandlerGarbage();
+            }
+            if (IsWpf == true)
+            {
+                CurrentRace?.CollectWpfGarbage();
+                //Collect garbage and change Image.Source to new track
+            }
             Track nextTrack = Competition.NextTrack();
             if (nextTrack != null)
             {
                 CurrentRace = new Race(nextTrack, Competition.Participants);
-                //CurrentRace.RaceFinished += OnRaceFinished;
                 NewVisuals?.Invoke(CurrentRace, new EventArgs());
                 CurrentRace.Start();
             }

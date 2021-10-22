@@ -19,7 +19,8 @@ namespace Controller
         private const int MaxLaps = 1;
         public event EventHandler DriversChanged;
         public event EventHandler RaceFinished;
-        
+        public static event EventHandler RaceStarted;
+
         public int AmountFinished { get; set; }
 
         public Race(Track track, List<IParticipant> participants)
@@ -85,6 +86,15 @@ namespace Controller
         public void CollectEventHandlerGarbage()
         {
             Console.Clear();
+            timer.Elapsed -= OnTimedEvent;
+            timer = null;
+            AmountFinished = 0;
+            DriversChanged = null;
+            RaceFinished = null;
+        }
+
+        public void CollectWpfGarbage()
+        {
             timer.Elapsed -= OnTimedEvent;
             timer = null;
             AmountFinished = 0;

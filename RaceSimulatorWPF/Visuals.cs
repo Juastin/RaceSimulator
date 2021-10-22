@@ -20,6 +20,9 @@ namespace RaceSimulatorWPF
         private static int[] _sectionSize;
         private static int _negativeX;
         private static int _negativeY;
+        private static Bitmap emptyBitmap;
+        private static Bitmap background;
+        private static Graphics graphics;
 
         #region graphics
 
@@ -58,11 +61,11 @@ namespace RaceSimulatorWPF
         {
             DefineUrl(track.Sections);
             DefineOffset();
-            Bitmap emptyBitmap = ImageHandler.CreateEmptyBitmap(200,200);
-            Bitmap background = ImageHandler.CreateEmptyBitmap(200,200);
+            emptyBitmap = ImageHandler.CreateEmptyBitmap(200,200);
+            background = ImageHandler.CreateEmptyBitmap(200,200);
             foreach (Section section in track.Sections)
             {
-                Graphics graphics = Graphics.FromImage(background);
+                graphics = Graphics.FromImage(background);
                 if (section.Url != null)
                     graphics.DrawImage(new Bitmap(ImageHandler.GetBitmap(section.Url)), section.X * 20 + _negativeX, section.Y * 20 + _negativeY);
             }
@@ -70,10 +73,17 @@ namespace RaceSimulatorWPF
             return ImageHandler.CreateBitmapSourceFromGdiBitmap(emptyBitmap);
         }
 
-        public static void OnNewVisuals(object sender, EventArgs e)
-        {
-            Initialise(Data.CurrentRace);
-        }
+        //public static void OnNewVisuals(object sender, EventArgs e)
+        //{
+        //    if (graphics != null)
+        //    {
+        //        graphics.Clear(Color.White);
+        //        graphics = null;
+        //    }
+        //    ImageHandler.ClearCache();
+        //    // Invoke mainwindow.OnDriversChanged
+        //    Initialise(Data.CurrentRace);
+        //}
 
         private static void DefineUrl(LinkedList<Section> sections)
         {

@@ -104,14 +104,11 @@ namespace RaceSimulator
         public static void OnNewVisuals(object sender, EventArgs e)
         {
             Initialise(Data.CurrentRace);
-            //DrawTrack(Data.CurrentRace.Track);
-            //Data.NewVisuals += OnNewVisuals;
-            //Console.WriteLine("OnNewVisuals is called");
         }
         public static void DrawTrack(Track track)
         {
-                DefineGraphics(track.Sections);
-                                
+            DefineGraphics(track.Sections);
+
 
             foreach (Section section in track.Sections)
             {
@@ -219,6 +216,5 @@ namespace RaceSimulator
             if (_lastY * _sectionSize[1] < _negativeY)
                 _negativeY = _lastY * _sectionSize[1];
         }
-
     }
 }

@@ -8,7 +8,7 @@ namespace RaceSimulator
     {
         static void Main(string[] args)
         {
-                Data.Initialise();
+                Data.Initialise(isWpf: false);
 
                 Visuals.Initialise(Data.CurrentRace);
                 //Data.CurrentRace.NewVisuals += OnNewVisuals;
