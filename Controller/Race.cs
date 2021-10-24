@@ -172,7 +172,7 @@ namespace Controller
                 participantSectionData.Right = null;
             }
             AmountFinished++;
-            DriversChanged?.Invoke(this, new DriversChangedEventArgs() { Track = Track });
+            DriversChanged?.Invoke(this, new DriversChangedEventArgs { Track = Track });
             if (AmountFinished >= Participants.Count)
             {
                 RaceFinished?.Invoke(this, new EventArgs());
