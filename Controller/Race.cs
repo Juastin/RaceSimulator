@@ -95,6 +95,7 @@ namespace Controller
 
         public void CollectWpfGarbage()
         {
+            timer.Stop();
             timer.Elapsed -= OnTimedEvent;
             timer = null;
             AmountFinished = 0;

@@ -20,9 +20,9 @@ namespace RaceSimulatorWPF
         private static int[] _sectionSize;
         private static int _negativeX;
         private static int _negativeY;
-        private static Bitmap _emptyBitmap;
-        private static Bitmap _background;
-        private static Graphics _graphics;
+       // private static Bitmap _emptyBitmap;
+       // private static Bitmap _background;
+       // private static Graphics _graphics;
 
         #region graphics
 
@@ -61,23 +61,24 @@ namespace RaceSimulatorWPF
         {
             DefineUrl(track.Sections);
             DefineOffset();
-            _emptyBitmap = ImageHandler.CreateEmptyBitmap(200,200);
-            _background = ImageHandler.CreateEmptyBitmap(200,200);
+         //   Bitmap _emptyBitmap = ImageHandler.CreateEmptyBitmap(200,200);
+            Bitmap _background = ImageHandler.CreateEmptyBitmap(200,200);
             foreach (Section section in track.Sections)
             {
-                _graphics = Graphics.FromImage(_background);
+                Graphics _graphics = Graphics.FromImage(_background);
                 if (section.Url != null)
                     _graphics.DrawImage(new Bitmap(ImageHandler.GetBitmap(section.Url)), section.X * 20 + _negativeX, section.Y * 20 + _negativeY);
             }
 
-            return ImageHandler.CreateBitmapSourceFromGdiBitmap(_emptyBitmap);
+            return ImageHandler.CreateBitmapSourceFromGdiBitmap(_background);
         }
 
         public static void ClearScreen()
         {
+          //  _graphics = null;
             //_graphics.Dispose();
             //_graphics.Clear(Color.White);
-            MainWindow.somethingLol();
+            //MainWindow.somethingLol();
         }
         //public static void OnNewVisuals(object sender, EventArgs e)
         //{
