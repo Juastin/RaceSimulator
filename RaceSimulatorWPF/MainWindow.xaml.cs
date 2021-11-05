@@ -45,9 +45,11 @@ namespace RaceSimulatorWPF
         }
 
         public void OnNewVisuals(object sender, EventArgs e)
-        {
+        { 
+            ImageHandler.ClearCache();
             Visuals.Initialise(Data.CurrentRace);
             Data.CurrentRace.DriversChanged += OnDriversChanged; // <-- Unsubscribe this 
+            Data.CurrentRace.Start();
         }
     }
 }

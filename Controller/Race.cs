@@ -30,7 +30,7 @@ namespace Controller
             Participants = participants;
             positions = new Dictionary<Section, SectionData>();
             random = new Random(DateTime.Now.Millisecond);
-            timer = new Timer(100);
+            timer = new Timer(500);
             leaderboard = new Dictionary<int, IParticipant>();
 
             timer.Elapsed += OnTimedEvent;
