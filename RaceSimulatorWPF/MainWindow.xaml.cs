@@ -29,8 +29,8 @@ namespace RaceSimulatorWPF
             Data.Initialise(isWpf: true);
             Visuals.Initialise(Data.CurrentRace);
             Data.CurrentRace.Start();
-            Data.CurrentRace.DriversChanged += OnDriversChanged; // <-- Unsubscribe this 
-           // Data.NewVisuals += OnNewVisuals;
+            Data.CurrentRace.DriversChanged += OnDriversChanged; 
+            Data.NewVisuals += OnNewVisuals;
         }
         public void OnDriversChanged(object sender, EventArgs e)
         {
@@ -46,20 +46,8 @@ namespace RaceSimulatorWPF
 
         public void OnNewVisuals(object sender, EventArgs e)
         {
-            ImageHandler.ClearCache();
             Visuals.Initialise(Data.CurrentRace);
-            Visuals.ClearScreen();
-
-            //Data.NewVisuals += OnNewVisuals;
-            Data.CurrentRace.DriversChanged += OnDriversChanged; // <-- Unsubscribe this
-            
-            this.Image.Dispatcher.BeginInvoke(
-                DispatcherPriority.Render,
-                new Action(() =>
-                {
-                    this.Image.Source = null;
-                    this.Image.Source = Visuals.DrawTrack(Data.CurrentRace.Track);
-                }));
+            Data.CurrentRace.DriversChanged += OnDriversChanged; // <-- Unsubscribe this 
         }
     }
 }

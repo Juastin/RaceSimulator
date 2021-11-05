@@ -55,7 +55,9 @@ namespace RaceSimulatorWPF
             DefineUrl(currentRace.Track.Sections);
             //DrawTrack(currentRace.Track);
             //Data.NewVisuals += OnNewVisuals;
+
         }
+
 
         public static BitmapSource DrawTrack(Track track)
         {
@@ -69,7 +71,6 @@ namespace RaceSimulatorWPF
                 if (section.Url != null)
                     _graphics.DrawImage(new Bitmap(ImageHandler.GetBitmap(section.Url)), section.X * 20 + _negativeX, section.Y * 20 + _negativeY);
             }
-
             return ImageHandler.CreateBitmapSourceFromGdiBitmap(_background);
         }
 
