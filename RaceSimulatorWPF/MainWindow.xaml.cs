@@ -28,28 +28,31 @@ namespace RaceSimulatorWPF
         {
             Data.Initialise(isWpf: true);
             Visuals.Initialise(Data.CurrentRace);
-            Data.CurrentRace.Start();
-            Data.CurrentRace.DriversChanged += OnDriversChanged; 
             Data.NewVisuals += OnNewVisuals;
+            Data.CurrentRace.DriversChanged += OnDriversChanged;
+            Data.CurrentRace.Start();
+            Data.CurrentRace.CollectGarbage += OnCollectWpfGarbage;
         }
         public void OnDriversChanged(object sender, EventArgs e)
         {
-            DriversChangedEventArgs driversChanged = (DriversChangedEventArgs)e;
             this.Image.Dispatcher.BeginInvoke(
                 DispatcherPriority.Render,
                 new Action(() =>
                 {
                     this.Image.Source = null;
-                    this.Image.Source = Visuals.DrawTrack(driversChanged.Track);
+                    this.Image.Source = Visuals.DrawTrack(Data.CurrentRace.Track);
                 }));
         }
-
         public void OnNewVisuals(object sender, EventArgs e)
-        { 
+        {
             ImageHandler.ClearCache();
-            Visuals.Initialise(Data.CurrentRace);
             Data.CurrentRace.DriversChanged += OnDriversChanged; // <-- Unsubscribe this 
+            Visuals.Initialise(Data.CurrentRace);
             Data.CurrentRace.Start();
+        }
+        public void OnCollectWpfGarbage(object sender, EventArgs e)
+        {
+            Data.CurrentRace.DriversChanged -= OnDriversChanged;
         }
     }
 }

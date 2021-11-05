@@ -104,6 +104,7 @@ namespace RaceSimulator
         public static void OnNewVisuals(object sender, EventArgs e)
         {
             Initialise(Data.CurrentRace);
+            Data.CurrentRace.Start();
         }
         public static void DrawTrack(Track track)
         {

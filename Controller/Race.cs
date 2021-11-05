@@ -19,7 +19,7 @@ namespace Controller
         private const int MaxLaps = 1;
         public event EventHandler DriversChanged;
         public event EventHandler RaceFinished;
-        public static event EventHandler RaceStarted;
+        public event EventHandler CollectGarbage;
 
         public int AmountFinished { get; set; }
 
@@ -30,7 +30,7 @@ namespace Controller
             Participants = participants;
             positions = new Dictionary<Section, SectionData>();
             random = new Random(DateTime.Now.Millisecond);
-            timer = new Timer(500);
+            timer = new Timer(200);
             leaderboard = new Dictionary<int, IParticipant>();
 
             timer.Elapsed += OnTimedEvent;
@@ -99,6 +99,7 @@ namespace Controller
             timer.Elapsed -= OnTimedEvent;
             timer = null;
             AmountFinished = 0;
+            CollectGarbage?.Invoke(this, new EventArgs());
             DriversChanged = null;
             RaceFinished = null;
         }
@@ -111,7 +112,6 @@ namespace Controller
             Section currentSection = GetSectionByParticipant(participant);
             Section nextSection = GetNextSection(currentSection, participant);
             SectionData currentSectionData = GetSectionData(currentSection);
-            SectionData nextSectionData = GetSectionData(nextSection);
 
             if (currentSectionData.Left == participant)
             {
