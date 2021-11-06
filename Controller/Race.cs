@@ -1,6 +1,7 @@
 ﻿using Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Timers;
 
@@ -68,9 +69,10 @@ namespace Controller
             {
                 participant.IsBroken = true;
 
+                if (Data.IsWpf) return;
+
                 if (participant.Name[0] != '*')
                     participant.Name = "*" + participant.Name;
-
             }
         }
         public void CalculateIsFixed(IParticipant participant)

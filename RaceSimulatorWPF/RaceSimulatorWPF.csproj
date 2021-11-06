@@ -13,6 +13,7 @@
     <None Remove="Graphics\cornerSW.png" />
     <None Remove="Graphics\finishHorizontal.png" />
     <None Remove="Graphics\finishVertical.png" />
+    <None Remove="Graphics\isBroken.png" />
     <None Remove="Graphics\startGridHorizontal.png" />
     <None Remove="Graphics\startGridVertical.png" />
     <None Remove="Graphics\straightHorizontal.png" />
@@ -41,6 +42,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Graphics\finishVertical.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\isBroken.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Graphics\startGridHorizontal.png">

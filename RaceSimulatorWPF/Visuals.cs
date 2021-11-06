@@ -42,6 +42,7 @@ namespace RaceSimulatorWPF
         private const string _teamColorPink = ".\\Graphics\\teamColorPink.png";
         private const string _teamColorRed = ".\\Graphics\\teamColorRed.png";
         private const string _teamColorYellow = ".\\Graphics\\teamColorYellow.png";
+        private const string _isBroken = ".\\Graphics\\isBroken.png";
 
         #endregion
 
@@ -76,23 +77,29 @@ namespace RaceSimulatorWPF
                     _graphics.DrawImage(new Bitmap(ImageHandler.GetBitmap(section.Url)), section.X * 20 + _negativeX, section.Y * 20 + _negativeY);
                     if (sectionData.Left != null)
                     {
-                        _graphics.DrawImage(GetBitmapOfParticipants(sectionData.Left), section.X * 20 + _negativeX, section.Y * 20 + _negativeY);
+                        _graphics.DrawImage(
+                            sectionData.Left.IsBroken 
+                                ? GetBitmapIsBroken() 
+                                : GetBitmapOfParticipants(sectionData.Left),
+                            section.X * 20 + _negativeX, section.Y * 20 + _negativeY);
                     }
                     if (sectionData.Right != null)
                     {
-                        _graphics.DrawImage(GetBitmapOfParticipants(sectionData.Right), section.X * 20 + 10 + _negativeX, section.Y * 20 + _negativeY);
+                        _graphics.DrawImage(
+                            sectionData.Right.IsBroken
+                                ? GetBitmapIsBroken()
+                                : GetBitmapOfParticipants(sectionData.Right), section.X * 20 + 10 + _negativeX,
+                            section.Y * 20 + 10 + _negativeY);
                     }
                 }
-                    
+
             }
             return ImageHandler.CreateBitmapSourceFromGdiBitmap(_background);
         }
         private static void DefineUrl(LinkedList<Section> sections)
         {
             foreach (Section section in sections)
-            {
                 DefineSectionUrl(section);
-            }
 
             DefineOffset();
         }
@@ -112,6 +119,11 @@ namespace RaceSimulatorWPF
                 case "Pink": return _teamColorPink;
                 default: return null;
             }
+        }
+
+        public static Bitmap GetBitmapIsBroken()
+        {
+            return ImageHandler.GetBitmap(_isBroken);
         }
         private static void DefineOffset()
         {
