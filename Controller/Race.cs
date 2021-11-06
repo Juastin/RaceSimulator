@@ -112,6 +112,7 @@ namespace Controller
             Section currentSection = GetSectionByParticipant(participant);
             Section nextSection = GetNextSection(currentSection, participant);
             SectionData currentSectionData = GetSectionData(currentSection);
+            SectionData nextSectionData = GetSectionData(nextSection);
 
             if (currentSectionData.Left == participant)
             {
@@ -199,7 +200,11 @@ namespace Controller
             if (Track.Sections.Contains(currentSection)) 
             {
                 if (Track.Sections.Find(currentSection)?.Next != null)
-                    return Track.Sections.Find(currentSection)?.Next.Value;
+                {
+                    var next = Track.Sections.Find(currentSection)?.Next;
+                    if (next != null)
+                        return next?.Value;
+                }
                 else
                     participant.LapsDriven++;
                 if (participant.LapsDriven >= MaxLaps)
