@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Controls.Primitives;
@@ -64,12 +65,25 @@ namespace RaceSimulatorWPF
             DefineUrl(track.Sections);
             DefineOffset();
             //Bitmap _emptyBitmap = ImageHandler.CreateEmptyBitmap(200,200);
+            
             Bitmap _background = ImageHandler.CreateEmptyBitmap(200,200);
             foreach (Section section in track.Sections)
             {
+                var sectionData = CurrentRace.GetSectionData(section);
                 Graphics _graphics = Graphics.FromImage(_background);
                 if (section.Url != null)
+                {
                     _graphics.DrawImage(new Bitmap(ImageHandler.GetBitmap(section.Url)), section.X * 20 + _negativeX, section.Y * 20 + _negativeY);
+                    if (sectionData.Left != null)
+                    {
+                        _graphics.DrawImage(GetBitmapOfParticipants(sectionData.Left), section.X * 20 + _negativeX, section.Y * 20 + _negativeY);
+                    }
+                    if (sectionData.Right != null)
+                    {
+                        _graphics.DrawImage(GetBitmapOfParticipants(sectionData.Right), section.X * 20 + 10 + _negativeX, section.Y * 20 + _negativeY);
+                    }
+                }
+                    
             }
             return ImageHandler.CreateBitmapSourceFromGdiBitmap(_background);
         }
@@ -83,6 +97,22 @@ namespace RaceSimulatorWPF
             DefineOffset();
         }
 
+        public static Bitmap GetBitmapOfParticipants(IParticipant participant)
+        {
+            return ImageHandler.GetBitmap(GetGraphicsOfParticipant(participant.TeamColors.ToString()));
+        }
+        public static string GetGraphicsOfParticipant(string teamColor)
+        {
+            switch (teamColor)
+            {
+                case "Blue": return _teamColorBlue;
+                case "Red": return _teamColorRed;
+                case "Yellow": return _teamColorYellow;
+                case "Green": return _teamColorGreen;
+                case "Pink": return _teamColorPink;
+                default: return null;
+            }
+        }
         private static void DefineOffset()
         {
             _negativeX = Math.Abs(_negativeX);
