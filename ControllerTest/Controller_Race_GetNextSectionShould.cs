@@ -24,7 +24,7 @@ namespace ControllerTest
             CurrentSection = Track.Sections.First.Value;
             TestSection = new Section(SectionTypes.Straight);
             Participants = new List<IParticipant>();
-            Participants.Add(new Driver("test", 0, new Car(5, 10, 10, false), TeamColors.Red));
+            Participants.Add(new Driver("test", 0, new Ufo(5, 10, 10, false), TeamColors.Red));
             Race = new Race(Track, Participants);
             
         }

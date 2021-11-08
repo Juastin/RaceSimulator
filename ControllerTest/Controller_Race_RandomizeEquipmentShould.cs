@@ -17,10 +17,10 @@ namespace ControllerTest
             
             List<IParticipant> Participants = new List<IParticipant>
             {
-                new Driver("A", 0, new Car(5, 10, 10, false), TeamColors.Red),
-                new Driver("B", 0, new Car(5, 10, 10, false), TeamColors.Red),
-                new Driver("C", 0, new Car(5, 10, 10, false), TeamColors.Red),
-                new Driver("D", 0, new Car(5, 10, 10, false), TeamColors.Red)
+                new Driver("A", 0, new Ufo(5, 10, 10, false), TeamColors.Red),
+                new Driver("B", 0, new Ufo(5, 10, 10, false), TeamColors.Red),
+                new Driver("C", 0, new Ufo(5, 10, 10, false), TeamColors.Red),
+                new Driver("D", 0, new Ufo(5, 10, 10, false), TeamColors.Red)
             }; 
             race = new Race
                 (

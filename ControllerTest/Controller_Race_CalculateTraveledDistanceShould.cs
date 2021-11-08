@@ -19,8 +19,8 @@ namespace ControllerTest
         public void SetUp()
         {
             Track track = new Track("TestTrack", new SectionTypes[] { SectionTypes.StartGrid, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.Finish });
-            test1 = new Driver("test1", 0, new Car(5, 5, 5, false), TeamColors.Red);
-            test2 = new Driver("test2", 0, new Car(5, 5, 5, false), TeamColors.Yellow);
+            test1 = new Driver("test1", 0, new Ufo(5, 5, 5, false), TeamColors.Red);
+            test2 = new Driver("test2", 0, new Ufo(5, 5, 5, false), TeamColors.Yellow);
             participants = new List<IParticipant>();
             race = new Race(track, participants);
 

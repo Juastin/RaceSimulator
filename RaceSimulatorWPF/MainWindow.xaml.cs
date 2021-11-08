@@ -24,6 +24,8 @@ namespace RaceSimulatorWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private RaceStats raceStats;
+        private CompStats compStats;
         public MainWindow()
         {
             Data.Initialise(isWpf: true);
@@ -69,6 +71,21 @@ namespace RaceSimulatorWPF
                 {
                     this.Image.Source = null;
                 }));
+        }
+
+        private void MenuItem_Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+        private void MenuItem_Open_CompStats_Click(object sender, RoutedEventArgs e)
+        {
+            compStats = new CompStats();
+            compStats.Show();
+        }
+        private void MenuItem_Open_RaceStats_Click(object sender, RoutedEventArgs e)
+        {
+            raceStats = new RaceStats();
+            raceStats.Show();
         }
     }
 }

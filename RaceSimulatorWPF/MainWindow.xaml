@@ -13,5 +13,14 @@
         </Grid.ColumnDefinitions>
         <Grid.Background>White</Grid.Background>
         <Image Name="Image" Grid.ColumnSpan="2" Margin="28,28,28,28"></Image>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top" Height="20" VerticalAlignment="Top" >
+                <MenuItem Header="Menu">
+                    <MenuItem Header="Race Statistics" Click="MenuItem_Open_RaceStats_Click"/>
+                    <MenuItem Header="Competition Statistics" Click="MenuItem_Open_CompStats_Click"/>
+                    <MenuItem Header="Exit" Click="MenuItem_Exit_Click"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
     </Grid>
 </Window>
