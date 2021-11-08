@@ -45,6 +45,11 @@ namespace RaceSimulatorWPF
         }
         public void OnNewVisuals(object sender, EventArgs e)
         {
+            if (sender == null) 
+            {
+                CleanUpWpf();
+                return;
+            }
             ImageHandler.ClearCache();
             Data.CurrentRace.DriversChanged += OnDriversChanged; // <-- Unsubscribe this 
             Visuals.Initialise(Data.CurrentRace);
@@ -53,6 +58,16 @@ namespace RaceSimulatorWPF
         public void OnCollectWpfGarbage(object sender, EventArgs e)
         {
             Data.CurrentRace.DriversChanged -= OnDriversChanged;
+        }
+
+        public void CleanUpWpf()
+        {
+            this.Image.Dispatcher.BeginInvoke(
+                DispatcherPriority.Render,
+                new Action(() =>
+                {
+                    this.Image.Source = null;
+                }));
         }
     }
 }

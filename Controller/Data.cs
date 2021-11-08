@@ -52,6 +52,10 @@ namespace Controller
                 //Collect garbage and change Image.Source to new track
             }
             Track nextTrack = Competition.NextTrack();
+            if (nextTrack == null)
+            {
+                NewVisuals?.Invoke(null,new EventArgs());
+            }
             if (nextTrack != null)
             {
                 CurrentRace = new Race(nextTrack, Competition.Participants);
