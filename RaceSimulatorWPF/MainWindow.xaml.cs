@@ -47,6 +47,7 @@ namespace RaceSimulatorWPF
         {
             if (sender == null) 
             {
+                ImageHandler.ClearCache();
                 CleanUpWpf();
                 return;
             }
