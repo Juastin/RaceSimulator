@@ -47,7 +47,7 @@ namespace RaceSimulatorWPF
         }
         public void OnNewVisuals(object sender, EventArgs e)
         {
-            if (sender == null) 
+            if (sender == null) // TODO: Remake this into event CompetitionFinished to make content change in label wpf.
             {
                 ImageHandler.ClearCache();
                 CleanUpWpf();
