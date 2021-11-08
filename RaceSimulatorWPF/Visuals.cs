@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Text;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media.Imaging;
@@ -106,7 +107,14 @@ namespace RaceSimulatorWPF
 
         public static Bitmap GetBitmapOfParticipants(IParticipant participant)
         {
-            return ImageHandler.GetBitmap(GetGraphicsOfParticipant(participant.TeamColors.ToString()));
+            var bitmap = ImageHandler.GetBitmap(GetGraphicsOfParticipant(participant.TeamColors.ToString()));
+            bitmap.RotateFlip(RotateFlipType.Rotate180FlipNone); // Works but wacky so
+                                                                 // 1. check if rotate before draw works
+                                                                 // 2. change to work with compass
+                                                                 // 3. make solid method for rotation.
+            
+            return bitmap;
+
         }
         public static string GetGraphicsOfParticipant(string teamColor)
         {
