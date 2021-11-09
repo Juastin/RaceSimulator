@@ -15,7 +15,7 @@
             <ColumnDefinition Width="13*"/>
         </Grid.ColumnDefinitions>
         <Grid.Background>White</Grid.Background>
-        <Image Name="Image" Grid.ColumnSpan="2" Margin="28,28,28,28"></Image>
+        <Image Name="Image" Grid.ColumnSpan="2" Margin="28,28,28,28" RenderOptions.BitmapScalingMode="NearestNeighbor"></Image>
         <DockPanel>
             <Menu DockPanel.Dock="Top" Height="20" VerticalAlignment="Top" >
                 <MenuItem Header="Menu">
@@ -25,6 +25,7 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <Label Content="{Binding TrackName, Mode=OneWay}" HorizontalAlignment="Left" Margin="10,254,0,0" VerticalAlignment="Top" Width="207"/>
+        <Label Content="Current Track:" HorizontalAlignment="Left" Margin="0,151,0,0" VerticalAlignment="Top" Width="207"/>
+        <Label Content="{Binding TrackName, Mode=OneWay}" HorizontalAlignment="Left" Margin="0,177,0,0" VerticalAlignment="Top" Width="207"/>
     </Grid>
 </Window>

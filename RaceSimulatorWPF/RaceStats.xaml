@@ -6,7 +6,17 @@
         xmlns:local="clr-namespace:RaceSimulatorWPF"
         mc:Ignorable="d"
         Title="RaceStats" Height="450" Width="800">
+    <Window.DataContext>
+        <local:RaceStatsDataContext/>
+    </Window.DataContext>
     <Grid>
-        
+        <ListView Margin="10,10,608,20">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn></GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
     </Grid>
 </Window>
