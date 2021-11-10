@@ -52,9 +52,6 @@ namespace RaceSimulatorWPF
             _negativeY = 0;
             CurrentRace = currentRace;
             DefineUrl(currentRace.Track.Sections);
-            //DrawTrack(currentRace.Track);
-            //Data.NewVisuals += OnNewVisuals;
-
         }
 
 
@@ -62,7 +59,6 @@ namespace RaceSimulatorWPF
         {
             DefineUrl(track.Sections);
             DefineOffset();
-            //Bitmap _emptyBitmap = ImageHandler.CreateEmptyBitmap(200,200);
             
             Bitmap background = ImageHandler.CreateEmptyBitmap(200,200);
             foreach (Section section in track.Sections)
@@ -108,15 +104,15 @@ namespace RaceSimulatorWPF
         }
         public static string GetGraphicsOfParticipant(string teamColor)
         {
-            switch (teamColor)
+            return teamColor switch
             {
-                case "Blue": return _teamColorBlue;
-                case "Red": return _teamColorRed;
-                case "Yellow": return _teamColorYellow;
-                case "Green": return _teamColorGreen;
-                case "Pink": return _teamColorPink;
-                default: return null;
-            }
+                "Blue" => _teamColorBlue,
+                "Red" => _teamColorRed,
+                "Yellow" => _teamColorYellow,
+                "Green" => _teamColorGreen,
+                "Pink" => _teamColorPink,
+                _ => null
+            };
         }
 
         public static Bitmap GetBitmapIsBroken()
