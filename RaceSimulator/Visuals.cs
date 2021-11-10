@@ -28,6 +28,18 @@ namespace RaceSimulator
             DrawTrack(currentRace.Track);
             Data.NewVisuals += OnNewVisuals;
         }
+        public static void Initialise()
+        {
+            _compass = 1;
+            _lastX = 0;
+            _lastY = 1;
+            _sectionSize = new[] { 5, 4 };
+            _negativeX = 0;
+            _negativeY = 0;
+            CurrentRace = Data.CurrentRace;
+            Data.CurrentRace.DriversChanged += OnDriversChanged;
+            Data.NewVisuals += OnNewVisuals;
+        }
         #region graphics
         private static string[] _finishHorizontal = {
             "ooooo",

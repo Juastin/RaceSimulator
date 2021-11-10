@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControllerTest", "Controlle
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaceSimulatorWPF", "RaceSimulatorWPF\RaceSimulatorWPF.csproj", "{52B0B573-2599-4DF7-BC06-E97301166846}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelTest", "ModelTest\ModelTest.csproj", "{A852648B-24B7-4866-A3E2-4B5C6C791C39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelTest", "ModelTest\ModelTest.csproj", "{A852648B-24B7-4866-A3E2-4B5C6C791C39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaceSimulatorWPFTest", "RacesimulatorWPFTest\RaceSimulatorWPFTest.csproj", "{47B5A308-D602-4491-AE6C-27372EDFC748}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaceSimulatorWPFTest", "RacesimulatorWPFTest\RaceSimulatorWPFTest.csproj", "{47B5A308-D602-4491-AE6C-27372EDFC748}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaceSimulatorTest", "RaceSimulatorTest\RaceSimulatorTest.csproj", "{FE9DBB40-004D-456B-BF8A-11761F43815B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{47B5A308-D602-4491-AE6C-27372EDFC748}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47B5A308-D602-4491-AE6C-27372EDFC748}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47B5A308-D602-4491-AE6C-27372EDFC748}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE9DBB40-004D-456B-BF8A-11761F43815B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE9DBB40-004D-456B-BF8A-11761F43815B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE9DBB40-004D-456B-BF8A-11761F43815B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE9DBB40-004D-456B-BF8A-11761F43815B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

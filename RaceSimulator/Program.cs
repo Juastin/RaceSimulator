@@ -11,7 +11,6 @@ namespace RaceSimulator
                 Data.Initialise(isWpf: false);
 
                 Visuals.Initialise(Data.CurrentRace);
-                //Data.CurrentRace.NewVisuals += OnNewVisuals;
                 Data.CurrentRace.Start();
                 
                 Thread.Sleep(200);
