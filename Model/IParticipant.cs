@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 public enum TeamColors
 {
@@ -20,5 +21,10 @@ namespace Model
         public int TraveledDistance { get; set; }
         public int LapsDriven { get; set; }
         public bool IsBroken { get; set; }
+        public TimeSpan Laptime { get; set; }
+        public Stopwatch Stopwatch { get; set; }
+        public TimeSpan PrevStopwatch { get; set; }
+
+        public void SetLaptime();
     }
 }

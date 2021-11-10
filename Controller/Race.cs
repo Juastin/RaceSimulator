@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Timers;
 
@@ -14,10 +15,9 @@ namespace Controller
         public DateTime StartTime { get; set; }
         private Random random;
         private Dictionary<Section, SectionData> positions;
-        private Dictionary<int, IParticipant> leaderboard;
         private Timer timer;
         private const int SectionLength = 100;
-        private const int MaxLaps = 1;
+        private const int MaxLaps = 3;
         public event EventHandler DriversChanged;
         public event EventHandler RaceFinished;
         public event EventHandler CollectGarbage;
@@ -31,13 +31,13 @@ namespace Controller
             Participants = participants;
             positions = new Dictionary<Section, SectionData>();
             random = new Random(DateTime.Now.Millisecond);
-            timer = new Timer(200);
-            leaderboard = new Dictionary<int, IParticipant>();
+            timer = new Timer(300);
 
             timer.Elapsed += OnTimedEvent;
             
             PlaceParticipantsOnStartGrid(Track, Participants);
             RandomizeEquipment();
+            
             
         }
         protected void OnTimedEvent(object sender, ElapsedEventArgs e)
@@ -52,7 +52,7 @@ namespace Controller
         {
             CalculateIsBroken(participant);
             CalculateIsFixed(participant);
-            if (participant.IsBroken == true)
+            if (participant.IsBroken)
                 return;
 
             participant.TraveledDistance += participant.Equipment.Performance * participant.Equipment.Speed;
@@ -93,8 +93,12 @@ namespace Controller
             AmountFinished = 0;
             DriversChanged = null;
             RaceFinished = null;
+            foreach (var p in Participants)
+            {
+                p.Stopwatch.Stop();
+                p.Stopwatch.Reset();
+            }
         }
-
         public void CollectWpfGarbage()
         {
             timer.Stop();
@@ -104,6 +108,13 @@ namespace Controller
             CollectGarbage?.Invoke(this, new EventArgs());
             DriversChanged = null;
             RaceFinished = null;
+            foreach (var p in Participants)
+            {
+                p.Stopwatch.Stop();
+                p.Stopwatch.Reset();
+                p.Laptime = new TimeSpan();
+                p.PrevStopwatch = new TimeSpan();
+            }
         }
         // TODO make solid
         public void MoveDriver(IParticipant participant)
@@ -162,6 +173,11 @@ namespace Controller
         public void Start()
         {
             timer.Start();
+            foreach (var p in Participants)
+            {
+                p.Stopwatch.Start();   
+            }
+            
         }
         public void RemoveFromTrack(IParticipant participant)
         {
@@ -176,6 +192,7 @@ namespace Controller
                 participantSectionData.Right = null;
             }
             AmountFinished++;
+            participant.Stopwatch.Stop();
             DriversChanged?.Invoke(this, new DriversChangedEventArgs { Track = Track });
             if (AmountFinished >= Participants.Count)
             {
@@ -208,7 +225,11 @@ namespace Controller
                         return next?.Value;
                 }
                 else
+                {
                     participant.LapsDriven++;
+                    participant.SetLaptime();
+
+                }
                 if (participant.LapsDriven >= MaxLaps)
                 {
                     RemoveFromTrack(participant);
@@ -252,7 +273,6 @@ namespace Controller
                             else
                                 sectionData.Right = Participants[y];
 
-                            leaderboard.Add(y +1, participants[y]);
                         }
                         
                     }

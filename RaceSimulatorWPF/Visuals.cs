@@ -19,7 +19,6 @@ namespace RaceSimulatorWPF
         private static int _lastY;
         public static Race CurrentRace { get; set; }
         private static int _compass;
-        private static int[] _sectionSize;
         private static int _negativeX;
         private static int _negativeY;
        // private static Bitmap _emptyBitmap;

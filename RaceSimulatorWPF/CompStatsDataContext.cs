@@ -21,7 +21,6 @@ namespace RaceSimulatorWPF
             Data.CurrentRace.DriversChanged += OnDriversChanged;
             Data.NewVisuals += OnNewVisuals;
         }
-
         private void OnNewVisuals(object sender, EventArgs e)
         {
             Data.CurrentRace.DriversChanged += OnDriversChanged;

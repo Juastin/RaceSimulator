@@ -50,7 +50,6 @@ namespace RaceSimulatorWPF
             if (sender == null) // TODO: Remake this into event CompetitionFinished to make content change in label wpf.
             {
                 ImageHandler.ClearCache();
-                CleanUpWpf();
                 return;
             }
             ImageHandler.ClearCache();
@@ -61,16 +60,6 @@ namespace RaceSimulatorWPF
         public void OnCollectWpfGarbage(object sender, EventArgs e)
         {
             Data.CurrentRace.DriversChanged -= OnDriversChanged;
-        }
-
-        public void CleanUpWpf()
-        {
-            this.Image.Dispatcher.BeginInvoke(
-                DispatcherPriority.Render,
-                new Action(() =>
-                {
-                    this.Image.Source = null;
-                }));
         }
 
         private void MenuItem_Exit_Click(object sender, RoutedEventArgs e)
