@@ -24,6 +24,7 @@ namespace Model
         public TimeSpan Laptime { get; set; }
         public Stopwatch Stopwatch { get; set; }
         public TimeSpan PrevStopwatch { get; set; }
+        public TimeSpan DifferenceLaptime { get; set; }
 
         public void SetLaptime();
     }

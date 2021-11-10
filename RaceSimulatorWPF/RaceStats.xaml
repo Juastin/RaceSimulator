@@ -11,10 +11,10 @@
     </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="79*"/>
-            <ColumnDefinition Width="81*"/>
+            <ColumnDefinition Width="297*"/>
+            <ColumnDefinition Width="233*"/>
+            <ColumnDefinition Width="270*"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Column="1" Content="{Binding intText}"></Label>
         <ListView Grid.Column="0" ItemsSource="{Binding Participants, Mode=OneWay}" Margin="0,0,1,0" >
             <ListView.View>
                 <GridView>
@@ -23,11 +23,19 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView ItemsSource="{Binding Participants, Mode=OneWay}" Margin="4,0,0,0" Grid.Column="1">
+        <ListView ItemsSource="{Binding Participants, Mode=OneWay}" Grid.Column="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="Laptime" DisplayMemberBinding="{Binding Laptime}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView Grid.Column="2" ItemsSource="{Binding Participants, Mode=OneWay}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Difference with previous laptime" DisplayMemberBinding="{Binding DifferenceLaptime}"/>
                 </GridView>
             </ListView.View>
         </ListView>

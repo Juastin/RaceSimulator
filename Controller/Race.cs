@@ -93,11 +93,7 @@ namespace Controller
             AmountFinished = 0;
             DriversChanged = null;
             RaceFinished = null;
-            foreach (var p in Participants)
-            {
-                p.Stopwatch.Stop();
-                p.Stopwatch.Reset();
-            }
+            
         }
         public void CollectWpfGarbage()
         {
@@ -114,6 +110,7 @@ namespace Controller
                 p.Stopwatch.Reset();
                 p.Laptime = new TimeSpan();
                 p.PrevStopwatch = new TimeSpan();
+                p.DifferenceLaptime = new TimeSpan();
             }
         }
         // TODO make solid
@@ -125,7 +122,7 @@ namespace Controller
             Section currentSection = GetSectionByParticipant(participant);
             Section nextSection = GetNextSection(currentSection, participant);
             SectionData currentSectionData = GetSectionData(currentSection);
-            SectionData nextSectionData = GetSectionData(nextSection);
+            GetSectionData(nextSection);
 
             if (currentSectionData.Left == participant)
             {
@@ -272,9 +269,7 @@ namespace Controller
                                 sectionData.Left = Participants[y];
                             else
                                 sectionData.Right = Participants[y];
-
                         }
-                        
                     }
                 }
             }
@@ -282,7 +277,6 @@ namespace Controller
             {
                 throw new Exception("Not enough startGrids, add some more to your track or remove some participants!");
             }
-            
         }
     }
 }

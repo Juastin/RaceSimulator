@@ -13,7 +13,6 @@ namespace RaceSimulatorWPF
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public ObservableCollection<IParticipant> Participants { get => new ObservableCollection<IParticipant>(Data.CurrentRace.Participants);  }
-        public int intText { get; set; } = 2;
         public RaceStatsDataContext()
         {
             Data.CurrentRace.DriversChanged += OnDriversChanged;
@@ -26,8 +25,6 @@ namespace RaceSimulatorWPF
         }
         private void OnDriversChanged(object sender, EventArgs e)
         {
-            intText++;
-            
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(""));
         }
     }

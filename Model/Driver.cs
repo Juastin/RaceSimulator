@@ -16,6 +16,8 @@ namespace Model
         public bool IsBroken { get; set; }
         public TimeSpan Laptime { get; set; }
         public TimeSpan PrevStopwatch { get; set; }
+        public TimeSpan PrevLaptime { get; set; }
+        public TimeSpan DifferenceLaptime { get; set; }
         public Stopwatch Stopwatch { get; set; }
         
 
@@ -32,8 +34,14 @@ namespace Model
         }
         public void SetLaptime()
         {
+            PrevLaptime = Laptime;
             Laptime = Stopwatch.Elapsed - PrevStopwatch;
             PrevStopwatch = Stopwatch.Elapsed;
+            CalculateDifferenceLaptimes();
+        }
+        public void CalculateDifferenceLaptimes()
+        {
+            DifferenceLaptime = PrevLaptime - Laptime;
         }
     }
 }
