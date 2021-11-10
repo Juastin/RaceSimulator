@@ -46,15 +46,13 @@ namespace Controller
             {
                 CurrentRace?.CollectEventHandlerGarbage();
             }
-            if (IsWpf == true)
+            if (IsWpf)
             {
                 CurrentRace?.CollectWpfGarbage();
-                //Collect garbage and change Image.Source to new track
             }
             Track nextTrack = Competition.NextTrack();
             if (nextTrack == null)
                 NewVisuals?.Invoke(null,EventArgs.Empty);
-
             if (nextTrack != null)
             {
                 CurrentRace = new Race(nextTrack, Competition.Participants);

@@ -21,9 +21,6 @@ namespace RaceSimulatorWPF
         private static int _compass;
         private static int _negativeX;
         private static int _negativeY;
-       // private static Bitmap _emptyBitmap;
-       // private static Bitmap _background;
-       // private static Graphics _graphics;
 
         #region graphics
 
@@ -67,17 +64,17 @@ namespace RaceSimulatorWPF
             DefineOffset();
             //Bitmap _emptyBitmap = ImageHandler.CreateEmptyBitmap(200,200);
             
-            Bitmap _background = ImageHandler.CreateEmptyBitmap(200,200);
+            Bitmap background = ImageHandler.CreateEmptyBitmap(200,200);
             foreach (Section section in track.Sections)
             {
                 var sectionData = CurrentRace.GetSectionData(section);
-                Graphics _graphics = Graphics.FromImage(_background);
+                Graphics graphics = Graphics.FromImage(background);
                 if (section.Url != null)
                 {
-                    _graphics.DrawImage(new Bitmap(ImageHandler.GetBitmap(section.Url)), section.X * 20 + _negativeX, section.Y * 20 + _negativeY);
+                    graphics.DrawImage(new Bitmap(ImageHandler.GetBitmap(section.Url)), section.X * 20 + _negativeX, section.Y * 20 + _negativeY);
                     if (sectionData.Left != null)
                     {
-                        _graphics.DrawImage(
+                        graphics.DrawImage(
                             sectionData.Left.IsBroken 
                                 ? GetBitmapIsBroken() 
                                 : GetBitmapOfParticipants(sectionData.Left),
@@ -85,7 +82,7 @@ namespace RaceSimulatorWPF
                     }
                     if (sectionData.Right != null)
                     {
-                        _graphics.DrawImage(
+                        graphics.DrawImage(
                             sectionData.Right.IsBroken
                                 ? GetBitmapIsBroken()
                                 : GetBitmapOfParticipants(sectionData.Right), section.X * 20 + 10 + _negativeX,
@@ -94,7 +91,7 @@ namespace RaceSimulatorWPF
                 }
 
             }
-            return ImageHandler.CreateBitmapSourceFromGdiBitmap(_background);
+            return ImageHandler.CreateBitmapSourceFromGdiBitmap(background);
         }
         private static void DefineUrl(LinkedList<Section> sections)
         {
@@ -179,6 +176,11 @@ namespace RaceSimulatorWPF
                         section.Url = _finishHorizontal;
                     break;
             }
+            ChangeCompass();
+            CalculateNegativeCords();
+        }
+        public static void ChangeCompass()
+        {
             if (_compass == 4)
                 _compass = 0;
             if (_compass == -1)
@@ -191,7 +193,9 @@ namespace RaceSimulatorWPF
                 _lastY++;
             if (_compass == 3)
                 _lastX--;
-
+        }
+        public static void CalculateNegativeCords()
+        {
             if (_lastX * 20 < _negativeX)
                 _negativeX = _lastX * 20;
             if (_lastY * 20 < _negativeY)

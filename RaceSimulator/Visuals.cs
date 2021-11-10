@@ -110,7 +110,6 @@ namespace RaceSimulator
         {
             DefineGraphics(track.Sections);
 
-
             foreach (Section section in track.Sections)
             {
                 string[] Visuals = DrawParticipantsOnTrack(section);
@@ -199,6 +198,11 @@ namespace RaceSimulator
                         section.Visuals = _finishHorizontal;
                     break;
             }
+            ChangeCompass();
+            CalculateNegativeCords();
+        }
+        public static void ChangeCompass()
+        {
             if (_compass == 4)
                 _compass = 0;
             if (_compass == -1)
@@ -211,7 +215,9 @@ namespace RaceSimulator
                 _lastY++;
             if (_compass == 3)
                 _lastX--;
-
+        }
+        public static void CalculateNegativeCords()
+        {
             if (_lastX * _sectionSize[0] < _negativeX)
                 _negativeX = _lastX * _sectionSize[0];
             if (_lastY * _sectionSize[1] < _negativeY)

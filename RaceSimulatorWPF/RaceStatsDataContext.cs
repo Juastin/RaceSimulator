@@ -12,12 +12,12 @@ namespace RaceSimulatorWPF
     public class RaceStatsDataContext : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public ObservableCollection<IParticipant> Participants { get => new ObservableCollection<IParticipant>(Data.CurrentRace.Participants);  }
+        public ObservableCollection<IParticipant> Participants => new ObservableCollection<IParticipant>(Data.CurrentRace.Participants);
+
         public RaceStatsDataContext()
         {
             Data.CurrentRace.DriversChanged += OnDriversChanged;
             Data.NewVisuals += OnNewVisuals;
-            //Participants = Data.CurrentRace.Participants;
         }
         private void OnNewVisuals(object sender, EventArgs e)
         {

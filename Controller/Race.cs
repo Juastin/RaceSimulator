@@ -37,8 +37,6 @@ namespace Controller
             
             PlaceParticipantsOnStartGrid(Track, Participants);
             RandomizeEquipment();
-            
-            
         }
         protected void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
