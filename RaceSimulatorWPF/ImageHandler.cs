@@ -12,6 +12,7 @@ namespace RaceSimulatorWPF
     public static class ImageHandler
     {
         private static Dictionary<string, Bitmap> imageBitmaps = new Dictionary<string, Bitmap>();
+
         public static Bitmap GetBitmap(string url)
         {
             if (imageBitmaps.TryGetValue(url, out Bitmap bitmap))

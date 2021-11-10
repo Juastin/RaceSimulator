@@ -22,7 +22,7 @@ namespace Controller
             IsWpf = isWpf;
         }
 
-        private static void OnRaceFinished(object sender, System.EventArgs e)
+        private static void OnRaceFinished(object sender, EventArgs e)
         {
             NextRace();
             CurrentRace.RaceFinished += OnRaceFinished;
@@ -52,7 +52,7 @@ namespace Controller
             }
             Track nextTrack = Competition.NextTrack();
             if (nextTrack == null)
-                NewVisuals?.Invoke(null,EventArgs.Empty);
+                NewVisuals?.Invoke(null, EventArgs.Empty);
             if (nextTrack != null)
             {
                 CurrentRace = new Race(nextTrack, Competition.Participants);
